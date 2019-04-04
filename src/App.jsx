@@ -3,6 +3,7 @@ import AppBar from "./components/layout/AppBar";
 import SideBar from "./components/layout/SideBar";
 import { MuiThemeProvider } from "@material-ui/core";
 import AppTheme from "./themes/AppTheme";
+import FeedTable from "./components/feed/FeedTable";
 
 class App extends Component {
   render() {
@@ -10,6 +11,7 @@ class App extends Component {
       <MuiThemeProvider theme={AppTheme}>
         <AppBar />
         <SideBar />
+        <FeedTable />
       </MuiThemeProvider>
     );
   }

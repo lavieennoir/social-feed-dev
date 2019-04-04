@@ -2,6 +2,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 export default createMuiTheme({
   sideBarWidth: 240,
+  tableMinWidth: 700,
   typography: {
     useNextVariants: true
   },
