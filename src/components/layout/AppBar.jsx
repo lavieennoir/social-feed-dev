@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import MaterialAppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import { KeyboardArrowLeft } from "@material-ui/icons";
 import { createStyles, withStyles } from "@material-ui/core/styles";
+import Breadcrumbs from "@material-ui/lab/Breadcrumbs";
 import classNames from "classnames";
 import SidebarStore from "../../stores/SidebarStore";
+import {
+  Toolbar,
+  Typography,
+  Link,
+  IconButton,
+  Button
+} from "@material-ui/core";
 
 const styles = theme =>
   createStyles({
@@ -18,12 +25,29 @@ const styles = theme =>
       })
     },
     drawerClose: {
-      width: `calc(100% - ${theme.spacing.unit * 7 + 1}px)`,
-      marginLeft: theme.spacing.unit * 7 + 1,
+      width: `calc(100% - ${theme.spacing.unit * 7}px)`,
+      marginLeft: theme.spacing.unit * 7,
       transition: theme.transitions.create(["width", "margin-left"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       })
+    },
+    toolbar: {
+      flexWrap: "wrap"
+    },
+    backArrow: {
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit
+    },
+    breadcrumbs: {
+      fontSize: theme.typography.fontSize * 1.5
+    },
+    saveButton: {
+      marginLeft: "auto",
+      marginRight: theme.spacing.unit * 5,
+      [theme.breakpoints.down("xs")]: {
+        marginBottom: theme.spacing.unit * 2
+      }
     }
   });
 
@@ -38,6 +62,10 @@ class AppBar extends Component {
   onSidebarToggle = () => {
     this.setState({ isSidebarOpen: SidebarStore.getState().isOpen });
   };
+
+  handleBreadcrumbClick = () => {};
+
+  handleNavigateBack = () => {};
 
   componentDidMount() {
     SidebarStore.on("change", this.onSidebarToggle);
@@ -58,10 +86,38 @@ class AppBar extends Component {
           [classes.drawerClose]: !this.state.isSidebarOpen
         })}
       >
-        <Toolbar>
-          <Typography variant="h6" color="inherit">
-            Page name
-          </Typography>
+        <Toolbar disableGutters className={classes.toolbar}>
+          <span className={classes.backArrow}>
+            <IconButton onClick={this.handleNavigateBack}>
+              <KeyboardArrowLeft color="textPrimary" />
+            </IconButton>
+          </span>
+          <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
+            <Link
+              color="textPrimary"
+              href="/Employees"
+              onClick={this.handleBreadcrumbClick}
+            >
+              Employees
+            </Link>
+            <Link
+              color="textPrimary"
+              href="/Employees/Advocacy/"
+              onClick={this.handleBreadcrumbClick}
+            >
+              Advocacy
+            </Link>
+            <Typography color="textPrimary" className={classes.breadcrumbs}>
+              Feed
+            </Typography>
+          </Breadcrumbs>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.saveButton}
+          >
+            Save changes
+          </Button>
         </Toolbar>
       </MaterialAppBar>
     );
