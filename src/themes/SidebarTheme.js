@@ -12,6 +12,11 @@ const SideBarTheme = createMuiTheme({
         color: "#565656"
       }
     },
+    MuiListItemText: {
+      primary: {
+        color: "#F6F6F6"
+      }
+    },
     MuiIconButton: {
       root: {
         color: "#236991"
@@ -22,6 +27,9 @@ const SideBarTheme = createMuiTheme({
         color: "#565656"
       }
     }
+  },
+  typography: {
+    useNextVariants: true
   }
 });
 

@@ -18,6 +18,7 @@ class SidebarStore extends EventEmitter {
       case SidebarActionTypes.TOGGLE:
         this.state.isOpen = !this.state.isOpen;
         this.emit("change");
+        break;
       default:
     }
   }

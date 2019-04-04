@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import MaterialAppBar from "@material-ui/core/AppBar";
 import { KeyboardArrowLeft } from "@material-ui/icons";
 import { createStyles, withStyles } from "@material-ui/core/styles";
@@ -88,8 +87,8 @@ class AppBar extends Component {
       >
         <Toolbar disableGutters className={classes.toolbar}>
           <span className={classes.backArrow}>
-            <IconButton onClick={this.handleNavigateBack}>
-              <KeyboardArrowLeft color="textPrimary" />
+            <IconButton onClick={this.handleNavigateBack} color="secondary">
+              <KeyboardArrowLeft />
             </IconButton>
           </span>
           <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
