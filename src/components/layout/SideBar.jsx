@@ -1,27 +1,31 @@
 import React, { Component, RefObject } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import SideBarTheme from "../../themes/SidebarTheme";
-import SidebarActions from "../../actions/SidebarActions";
-import SidebarStore from "../../stores/SidebarStore";
-import SurroundSoundIcon from "@material-ui/icons/SurroundSound";
-import ViewListIcon from "@material-ui/icons/ViewList";
-import ViewQuiltIcon from "@material-ui/icons/ViewQuilt";
-import PeopleIcon from "@material-ui/icons/People";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import RefreshIcon from "@material-ui/icons/Refresh";
+import {
+  Drawer,
+  List,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "@material-ui/core";
+import {
+  SurroundSound,
+  ViewList,
+  ViewQuilt,
+  People,
+  FileCopy,
+  Refresh
+} from "@material-ui/icons";
 import {
   withStyles,
   createStyles,
   MuiThemeProvider
 } from "@material-ui/core/styles";
+import SideBarTheme from "../../themes/SidebarTheme";
+import SidebarActions from "../../actions/SidebarActions";
+import SidebarStore from "../../stores/SidebarStore";
 
 const styles = theme =>
   createStyles({
@@ -38,7 +42,7 @@ const styles = theme =>
       })
     },
     drawerClose: {
-      width: theme.spacing.unit * 7 + 1,
+      width: theme.spacing.unit * 7,
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
@@ -86,56 +90,56 @@ class SideBar extends Component {
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.handleDrawerToggle}>
-              <SurroundSoundIcon />
+              <SurroundSound />
             </IconButton>
           </div>
-          <Divider />
+          <Divider color="primary" />
           <List>
             <ListItem button key="item1">
               <ListItemIcon>
-                <ViewQuiltIcon />
+                <ViewQuilt />
               </ListItemIcon>
               <ListItemText primary="Item 1" />
             </ListItem>
             <ListItem button key="item2">
               <ListItemIcon>
-                <PeopleIcon />
+                <People />
               </ListItemIcon>
               <ListItemText primary="Item 2" />
             </ListItem>
             <ListItem button key="item3">
               <ListItemIcon>
-                <PeopleIcon />
+                <People />
               </ListItemIcon>
               <ListItemText primary="Item 3" />
             </ListItem>
             <ListItem button key="item4">
               <ListItemIcon>
-                <PeopleIcon />
+                <People />
               </ListItemIcon>
               <ListItemText primary="Item 4" />
             </ListItem>
             <ListItem button key="item5">
               <ListItemIcon>
-                <ViewListIcon />
+                <ViewList />
               </ListItemIcon>
               <ListItemText primary="Item 5 " />
             </ListItem>
             <ListItem button key="item6">
               <ListItemIcon>
-                <FileCopyIcon />
+                <FileCopy />
               </ListItemIcon>
               <ListItemText primary="Item 6" />
             </ListItem>
             <ListItem button key="item7">
               <ListItemIcon>
-                <FileCopyIcon />
+                <FileCopy />
               </ListItemIcon>
               <ListItemText primary="Item 7" />
             </ListItem>
             <ListItem button key="item8">
               <ListItemIcon>
-                <RefreshIcon />
+                <Refresh />
               </ListItemIcon>
               <ListItemText primary="Item 8" />
             </ListItem>
