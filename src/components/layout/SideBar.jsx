@@ -1,5 +1,4 @@
-import React, { Component, RefObject } from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from "react";
 import classNames from "classnames";
 import {
   Drawer,
@@ -73,7 +72,7 @@ class SideBar extends Component {
   };
 
   render() {
-    const { classes, items } = this.props;
+    const { classes } = this.props;
 
     return (
       <MuiThemeProvider theme={SideBarTheme}>
