@@ -43,7 +43,7 @@ const styles = theme =>
     },
     saveButton: {
       marginLeft: "auto",
-      marginRight: theme.spacing.unit * 5,
+      marginRight: theme.spacing.unit * 3,
       [theme.breakpoints.down("xs")]: {
         marginBottom: theme.spacing.unit * 2
       }
