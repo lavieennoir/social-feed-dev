@@ -9,14 +9,7 @@ import {
   ListItemIcon,
   ListItemText
 } from "@material-ui/core";
-import {
-  SurroundSound,
-  ViewList,
-  ViewQuilt,
-  People,
-  FileCopy,
-  Refresh
-} from "@material-ui/icons";
+import { SurroundSound, ViewQuilt, People } from "@material-ui/icons";
 import {
   withStyles,
   createStyles,
@@ -25,6 +18,7 @@ import {
 import SideBarTheme from "../../themes/SidebarTheme";
 import SidebarActions from "../../actions/SidebarActions";
 import SidebarStore from "../../stores/SidebarStore";
+import NavigationActions from "../../actions/NavigationActions";
 
 const styles = theme =>
   createStyles({
@@ -94,53 +88,25 @@ class SideBar extends Component {
           </div>
           <Divider color="primary" />
           <List>
-            <ListItem button key="item1">
+            <ListItem
+              button
+              key="feed"
+              onClick={() => NavigationActions.openFeed()}
+            >
               <ListItemIcon>
                 <ViewQuilt />
               </ListItemIcon>
-              <ListItemText primary="Item 1" />
+              <ListItemText primary="Feed" />
             </ListItem>
-            <ListItem button key="item2">
+            <ListItem
+              button
+              key="companyProfile"
+              onClick={() => NavigationActions.openCompanyProfile()}
+            >
               <ListItemIcon>
                 <People />
               </ListItemIcon>
-              <ListItemText primary="Item 2" />
-            </ListItem>
-            <ListItem button key="item3">
-              <ListItemIcon>
-                <People />
-              </ListItemIcon>
-              <ListItemText primary="Item 3" />
-            </ListItem>
-            <ListItem button key="item4">
-              <ListItemIcon>
-                <People />
-              </ListItemIcon>
-              <ListItemText primary="Item 4" />
-            </ListItem>
-            <ListItem button key="item5">
-              <ListItemIcon>
-                <ViewList />
-              </ListItemIcon>
-              <ListItemText primary="Item 5 " />
-            </ListItem>
-            <ListItem button key="item6">
-              <ListItemIcon>
-                <FileCopy />
-              </ListItemIcon>
-              <ListItemText primary="Item 6" />
-            </ListItem>
-            <ListItem button key="item7">
-              <ListItemIcon>
-                <FileCopy />
-              </ListItemIcon>
-              <ListItemText primary="Item 7" />
-            </ListItem>
-            <ListItem button key="item8">
-              <ListItemIcon>
-                <Refresh />
-              </ListItemIcon>
-              <ListItemText primary="Item 8" />
+              <ListItemText primary="Company profile" />
             </ListItem>
           </List>
         </Drawer>

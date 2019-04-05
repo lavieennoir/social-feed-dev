@@ -93,15 +93,17 @@ class AppBar extends Component {
           </span>
           <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
             <Link
+              className={classes.breadcrumbs}
               color="textPrimary"
-              href="/Employees"
+              component="button"
               onClick={this.handleBreadcrumbClick}
             >
               Employees
             </Link>
             <Link
+              className={classes.breadcrumbs}
               color="textPrimary"
-              href="/Employees/Advocacy/"
+              component="button"
               onClick={this.handleBreadcrumbClick}
             >
               Advocacy
