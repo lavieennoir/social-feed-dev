@@ -3,6 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import FeedRepository from "../../repositories/FeedRepository";
 import SidebarStore from "../../stores/SidebarStore";
 import classNames from "classnames";
+import FeedTableHead from "./FeedTableHead";
+import FeedTableToolbar from "./FeedTableToolbar";
 import DefaultImage from "../../assets/Overlay.svg";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
@@ -12,17 +14,18 @@ import LinkedinGrayIcon from "../../assets/LinkedinGray.svg";
 import TwitterGrayIcon from "../../assets/TwitterGray.svg";
 import {
   Typography,
+  TablePagination,
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   Paper,
   Link,
   IconButton,
   Menu,
   MenuItem,
-  ButtonBase
+  ButtonBase,
+  Divider
 } from "@material-ui/core";
 
 const styles = theme => ({
@@ -46,6 +49,11 @@ const styles = theme => ({
   },
   table: {
     minWidth: theme.tableMinWidth
+  },
+  tableWrapper: {
+    overflowX: "auto",
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit
   },
   paperInfo: {
     textAlign: "center",
@@ -79,7 +87,11 @@ class FeedTable extends Component {
       isSidebarOpen: SidebarStore.getState().isOpen,
       items: [],
       anchorAction: null,
-      anchorShare: null
+      anchorShare: null,
+      page: 0,
+      rowsPerPage: 5,
+      order: "asc",
+      orderBy: null
     };
 
     this.onFeedLoaded = this.onFeedLoaded.bind(this);
@@ -122,6 +134,51 @@ class FeedTable extends Component {
     this.setState({ anchorShare: null });
   };
 
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = "desc";
+
+    if (this.state.orderBy === property && this.state.order === "desc") {
+      order = "asc";
+    }
+
+    this.setState({ order, orderBy });
+  };
+
+  desc(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  stableSort(array, cmp) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = cmp(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map(el => el[0]);
+  }
+
+  getSorting(order, orderBy) {
+    return order === "desc"
+      ? (a, b) => this.desc(a, b, orderBy)
+      : (a, b) => -this.desc(a, b, orderBy);
+  }
+
   componentDidMount() {
     SidebarStore.on("change", this.onSidebarToggle);
     const feedRepo = new FeedRepository();
@@ -143,7 +200,11 @@ class FeedTable extends Component {
       items,
       isSidebarOpen,
       anchorAction,
-      anchorShare
+      anchorShare,
+      page,
+      rowsPerPage,
+      order,
+      orderBy
     } = this.state;
     const isActionOpen = anchorAction ? true : false;
     const isShareOpen = anchorShare ? true : false;
@@ -182,144 +243,169 @@ class FeedTable extends Component {
             [classes.drawerClose]: !isSidebarOpen
           })}
         >
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Network</TableCell>
-                <TableCell>Post</TableCell>
-                <TableCell>Link</TableCell>
-                <TableCell>Image</TableCell>
-                <TableCell>Preview Link</TableCell>
-                <TableCell>Share</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {items.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.network}
-                  </TableCell>
-                  <TableCell>
-                    <div className={classes.postCell}>{row.post}</div>
-                  </TableCell>
-                  <TableCell>
-                    <Link href={row.link} target="_blank">
-                      {row.link}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <img
-                      src={row.image ? row.image : DefaultImage}
-                      alt="feed"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Link href={row.link} target="_blank">
-                      Preview
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <ButtonBase
-                      className={classes.shareButton}
-                      aria-owns={isShareOpen ? "share-menu" : undefined}
-                      aria-haspopup="true"
-                      onClick={this.handleShareClick}
-                    >
-                      Share
-                      {isShareOpen ? <ArrowDropUp /> : <ArrowDropDown />}
-                    </ButtonBase>
-                    <Menu
-                      id="share-menu"
-                      anchorEl={anchorShare}
-                      open={isShareOpen}
-                      onClose={this.handleShareClose}
-                      getContentAnchorEl={null}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "left"
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "center"
-                      }}
-                    >
-                      <MenuItem
-                        key="share-facebook"
-                        onClick={this.handleShareClose}
-                      >
+          <FeedTableToolbar />
+          <div className={classes.tableWrapper}>
+            <Divider />
+            <Table className={classes.table}>
+              <FeedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={this.handleRequestSort}
+                rowCount={items.length}
+              />
+              <TableBody>
+                {this.stableSort(items, this.getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(row => (
+                    <TableRow key={row.id}>
+                      <TableCell component="th" scope="row">
+                        {row.network}
+                      </TableCell>
+                      <TableCell>
+                        <div className={classes.postCell}>{row.post}</div>
+                      </TableCell>
+                      <TableCell>
+                        <Link href={row.link} target="_blank">
+                          {row.link}
+                        </Link>
+                      </TableCell>
+                      <TableCell>
                         <img
-                          src={FacebookGrayIcon}
-                          alt="facebook icon"
-                          className={classes.shareIcon}
+                          src={row.image ? row.image : DefaultImage}
+                          alt="feed"
                         />
-                        Facebook
-                      </MenuItem>
-                      <MenuItem
-                        key="share-twitter"
-                        onClick={this.handleShareClose}
-                      >
-                        <img
-                          src={TwitterGrayIcon}
-                          alt="twitter icon"
-                          className={classes.shareIcon}
-                        />
-                        Twitter
-                      </MenuItem>
-                      <MenuItem
-                        key="share-linkedin"
-                        onClick={this.handleShareClose}
-                      >
-                        <img
-                          src={LinkedinGrayIcon}
-                          alt="linkedin icon"
-                          className={classes.shareIcon}
-                        />
-                        LinkedIn
-                      </MenuItem>
-                      <MenuItem
-                        key="share-instagram"
-                        onClick={this.handleShareClose}
-                      >
-                        <img
-                          src={InstagramGrayIcon}
-                          alt="instagram icon"
-                          className={classes.shareIcon}
-                        />
-                        Instagram
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-                  <TableCell>
-                    <IconButton
-                      aria-label="More"
-                      aria-owns={isActionOpen ? "action-menu" : undefined}
-                      aria-haspopup="true"
-                      onClick={this.handleActionClick}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id="action-menu"
-                      anchorEl={anchorAction}
-                      open={isActionOpen}
-                      onClose={this.handleActionClose}
-                    >
-                      <MenuItem key="action1" onClick={this.handleActionClose}>
-                        Action 1
-                      </MenuItem>
-                      <MenuItem key="action2" onClick={this.handleActionClose}>
-                        Action 2
-                      </MenuItem>
-                      <MenuItem key="action3" onClick={this.handleActionClose}>
-                        Action 3
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      </TableCell>
+                      <TableCell>
+                        <Link href={row.link} target="_blank">
+                          Preview
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        <ButtonBase
+                          className={classes.shareButton}
+                          aria-owns={isShareOpen ? "share-menu" : undefined}
+                          aria-haspopup="true"
+                          onClick={this.handleShareClick}
+                        >
+                          Share
+                          {isShareOpen ? <ArrowDropUp /> : <ArrowDropDown />}
+                        </ButtonBase>
+                        <Menu
+                          id="share-menu"
+                          anchorEl={anchorShare}
+                          open={isShareOpen}
+                          onClose={this.handleShareClose}
+                          getContentAnchorEl={null}
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left"
+                          }}
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "center"
+                          }}
+                        >
+                          <MenuItem
+                            key="share-facebook"
+                            onClick={this.handleShareClose}
+                          >
+                            <img
+                              src={FacebookGrayIcon}
+                              alt="facebook icon"
+                              className={classes.shareIcon}
+                            />
+                            Facebook
+                          </MenuItem>
+                          <MenuItem
+                            key="share-twitter"
+                            onClick={this.handleShareClose}
+                          >
+                            <img
+                              src={TwitterGrayIcon}
+                              alt="twitter icon"
+                              className={classes.shareIcon}
+                            />
+                            Twitter
+                          </MenuItem>
+                          <MenuItem
+                            key="share-linkedin"
+                            onClick={this.handleShareClose}
+                          >
+                            <img
+                              src={LinkedinGrayIcon}
+                              alt="linkedin icon"
+                              className={classes.shareIcon}
+                            />
+                            LinkedIn
+                          </MenuItem>
+                          <MenuItem
+                            key="share-instagram"
+                            onClick={this.handleShareClose}
+                          >
+                            <img
+                              src={InstagramGrayIcon}
+                              alt="instagram icon"
+                              className={classes.shareIcon}
+                            />
+                            Instagram
+                          </MenuItem>
+                        </Menu>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton
+                          aria-label="More"
+                          aria-owns={isActionOpen ? "action-menu" : undefined}
+                          aria-haspopup="true"
+                          onClick={this.handleActionClick}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          id="action-menu"
+                          anchorEl={anchorAction}
+                          open={isActionOpen}
+                          onClose={this.handleActionClose}
+                        >
+                          <MenuItem
+                            key="action1"
+                            onClick={this.handleActionClose}
+                          >
+                            Action 1
+                          </MenuItem>
+                          <MenuItem
+                            key="action2"
+                            onClick={this.handleActionClose}
+                          >
+                            Action 2
+                          </MenuItem>
+                          <MenuItem
+                            key="action3"
+                            onClick={this.handleActionClose}
+                          >
+                            Action 3
+                          </MenuItem>
+                        </Menu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={items.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            backIconButtonProps={{
+              "aria-label": "Previous Page"
+            }}
+            nextIconButtonProps={{
+              "aria-label": "Next Page"
+            }}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          />
         </Paper>
       );
     }
