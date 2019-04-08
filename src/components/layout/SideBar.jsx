@@ -108,6 +108,16 @@ class SideBar extends Component {
               </ListItemIcon>
               <ListItemText primary="Company profile" />
             </ListItem>
+            <ListItem
+              button
+              key="userProfile"
+              onClick={() => NavigationActions.openUserProfile()}
+            >
+              <ListItemIcon>
+                <People />
+              </ListItemIcon>
+              <ListItemText primary="User profile" />
+            </ListItem>
           </List>
         </Drawer>
       </MuiThemeProvider>

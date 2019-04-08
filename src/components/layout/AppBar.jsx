@@ -106,7 +106,6 @@ class AppBar extends Component {
           </Breadcrumbs>
         );
       case NavigationActionTypes.COMP_PROFILE:
-      default:
         return (
           <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
             <Typography color="textPrimary" className={classes.breadcrumbs}>
@@ -114,6 +113,15 @@ class AppBar extends Component {
             </Typography>
           </Breadcrumbs>
         );
+      case NavigationActionTypes.USER_PROFILE:
+        return (
+          <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
+            <Typography color="textPrimary" className={classes.breadcrumbs}>
+              Edit Profile
+            </Typography>
+          </Breadcrumbs>
+        );
+      default:
     }
   }
 

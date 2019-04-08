@@ -190,7 +190,7 @@ class CompanyFrom extends Component {
                   inputProps={{ maxLength: 150 }}
                 />
                 <FormHelperText
-                  hidden={!this.hasError("customerSubdomain")}
+                  hidden={!this.hasError("company")}
                   error={this.hasError("company")}
                 />
               </FormControl>
@@ -303,7 +303,7 @@ class CompanyFrom extends Component {
                   error={this.hasError("email")}
                   id="email"
                   label="Accounting Email"
-                  type="text"
+                  type="email"
                   value={this.state.email !== null ? this.state.email : ""}
                   onChange={this.handleChange("email")}
                   fullWidth

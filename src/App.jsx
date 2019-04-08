@@ -5,6 +5,7 @@ import { MuiThemeProvider } from "@material-ui/core";
 import AppTheme from "./themes/AppTheme";
 import FeedTable from "./components/feed/FeedTable";
 import CompanyForm from "./components/companyProfile/CompanyForm";
+import UserForm from "./components/userProfile/UserForm";
 import NavigationStore from "./stores/NavigationStore";
 import { NavigationActionTypes } from "./actions/NavigationActions";
 
@@ -39,6 +40,9 @@ class App extends Component {
         break;
       case NavigationActionTypes.COMP_PROFILE:
         currentPageComponent = <CompanyForm />;
+        break;
+      case NavigationActionTypes.USER_PROFILE:
+        currentPageComponent = <UserForm />;
         break;
       default:
         currentPageComponent = <FeedTable />;
