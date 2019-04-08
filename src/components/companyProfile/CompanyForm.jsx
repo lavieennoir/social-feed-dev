@@ -11,9 +11,12 @@ import {
   InputLabel,
   FormHelperText,
   Typography,
-  Switch
+  Switch,
+  Link,
+  ButtonBase
 } from "@material-ui/core";
 import SidebarStore from "../../stores/SidebarStore";
+import DragAndDropInput from "../inputs/DragDropInput";
 const styles = theme =>
   createStyles({
     hidden: {
@@ -61,6 +64,10 @@ const styles = theme =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       })
+    },
+    buttonFile: {
+      width: "100%",
+      marginTop: theme.spacing.unit
     }
   });
 
@@ -85,6 +92,8 @@ class CompanyFrom extends Component {
       country: "",
       isLiveModeEnabled: false,
       hasError: [],
+      file: null,
+      maxFileSizeKb: 500,
       isSidebarOpen: SidebarStore.getState().isOpen
     };
   }
@@ -126,6 +135,15 @@ class CompanyFrom extends Component {
     });
   };
 
+  OnFileDrop = files => {
+    if (files.length > 0) {
+      const file = files[files.length - 1];
+      if (file.size * 1024 <= this.state.maxFileSizeKb) {
+        this.setState({ file });
+      }
+    }
+  };
+
   hasError = field => {
     return this.state.hasError.indexOf(field) !== -1;
   };
@@ -157,7 +175,7 @@ class CompanyFrom extends Component {
               color="primary"
             />
           </div>
-          <Grid container spacing={36}>
+          <Grid container spacing={32}>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <TextField
@@ -334,6 +352,28 @@ class CompanyFrom extends Component {
                   <MenuItem value={9}>AWG - Aruban florin</MenuItem>
                   <MenuItem value={10}>AZN - Azerbaijani manat</MenuItem>
                 </Select>
+              </FormControl>
+              <FormControl fullWidth className={classes.formInput}>
+                <FormHelperText htmlFor="logo-file">
+                  Company Image/Logo
+                </FormHelperText>
+                <input
+                  onChange={e => this.OnFileDrop(e.target.files)}
+                  accept="image/*"
+                  className={classes.hidden}
+                  id="logo-file"
+                  type="file"
+                />
+                <label htmlFor="logo-file">
+                  <ButtonBase component="span" className={classes.buttonFile}>
+                    <DragAndDropInput handleDrop={this.OnFileDrop}>
+                      Maximum file size: {this.state.maxFileSizeKb}Kb
+                      <br />
+                      Drag &amp; Drop Company image or
+                      <Link> upload clicking here</Link>
+                    </DragAndDropInput>
+                  </ButtonBase>
+                </label>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} className={classes.formCol}>
