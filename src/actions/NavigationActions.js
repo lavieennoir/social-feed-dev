@@ -2,7 +2,8 @@ import NavigationDispatcher from "../data/NavigationDispatcher";
 
 export const NavigationActionTypes = {
   FEED: "FEED",
-  COMP_PROFILE: "COMP_PROFILE"
+  COMP_PROFILE: "COMP_PROFILE",
+  USER_PROFILE: "USER_PROFILE"
 };
 
 const Actions = {
@@ -14,6 +15,11 @@ const Actions = {
   openCompanyProfile() {
     NavigationDispatcher.dispatch({
       type: NavigationActionTypes.COMP_PROFILE
+    });
+  },
+  openUserProfile() {
+    NavigationDispatcher.dispatch({
+      type: NavigationActionTypes.USER_PROFILE
     });
   }
 };
