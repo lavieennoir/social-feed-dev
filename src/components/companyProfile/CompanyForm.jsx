@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import SidebarStore from "../../stores/SidebarStore";
 import DragAndDropInput from "../inputs/DragDropInput";
+import SocialMedaiAccounts from "../inputs/SocialMediaAccounts";
 const styles = theme =>
   createStyles({
     hidden: {
@@ -497,6 +498,12 @@ class CompanyFrom extends Component {
                   <MenuItem value={19}>Barbados</MenuItem>
                   <MenuItem value={20}>Belgium</MenuItem>
                 </Select>
+              </FormControl>
+              <FormControl fullWidth className={classes.formInput}>
+                <FormHelperText>
+                  Connect your company social media accounts
+                </FormHelperText>
+                <SocialMedaiAccounts />
               </FormControl>
             </Grid>
           </Grid>
