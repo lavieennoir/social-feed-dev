@@ -146,6 +146,13 @@ class UserFrom extends Component {
     }
   };
 
+  OnAvatarLoad = files => {
+    if (files.length > 0) {
+      const avatar = files[files.length - 1];
+      this.setState({ avatar });
+    }
+  };
+
   hasError = field => {
     return this.state.hasError.indexOf(field) !== -1;
   };
@@ -168,134 +175,149 @@ class UserFrom extends Component {
         })}
       >
         <Paper className={classes.form}>
-          <Grid container spacing={32}>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <TextField
-                  required
-                  error={this.hasError("name")}
-                  id="name"
-                  label="Full name"
-                  type="text"
-                  value={this.state.name !== null ? this.state.name : ""}
-                  onChange={this.handleChange("name")}
-                  inputProps={{ maxLength: 150 }}
-                />
-                <FormHelperText
-                  hidden={!this.hasError("name")}
-                  error={this.hasError("namr")}
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  required
-                  error={this.hasError("email")}
-                  id="email"
-                  label="Email"
-                  type="email"
-                  value={this.state.email !== null ? this.state.email : ""}
-                  onChange={this.handleChange("email")}
-                  fullWidth
-                  className={classes.formInput}
-                  inputProps={{ maxLength: 150 }}
-                />
-                <FormHelperText
-                  hidden={!this.hasError("email")}
-                  error={this.hasError("email")}
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  error={this.hasError("currentPass")}
-                  id="currentPass"
-                  label="Current Password"
-                  type="password"
-                  value={
-                    this.state.currentPass !== null
-                      ? this.state.currentPass
-                      : ""
-                  }
-                  onChange={this.handleChange("currentPass")}
-                  fullWidth
-                  className={classes.formInput}
-                  inputProps={{ maxLength: 150 }}
-                />
-                <FormHelperText
-                  hidden={!this.hasError("currentPass")}
-                  error={this.hasError("currentPass")}
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  error={this.hasError("newPass")}
-                  id="newPass"
-                  label="New Password"
-                  type="password"
-                  value={
-                    this.state.newPass !== null ? this.state.currentPass : ""
-                  }
-                  onChange={this.handleChange("newPass")}
-                  fullWidth
-                  className={classes.formInput}
-                  inputProps={{ maxLength: 150 }}
-                />
-                <FormHelperText
-                  hidden={!this.hasError("newPass")}
-                  error={this.hasError("newPass")}
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  error={this.hasError("newPassConfirmation")}
-                  id="newPassConfirmation"
-                  label="Current Password Confirmation"
-                  type="password"
-                  value={
-                    this.state.newPassConfirmation !== null
-                      ? this.state.newPassConfirmation
-                      : ""
-                  }
-                  onChange={this.handleChange("newPassConfirmation")}
-                  fullWidth
-                  className={classes.formInput}
-                  inputProps={{ maxLength: 150 }}
-                />
-                <FormHelperText
-                  hidden={!this.hasError("newPassConfirmation")}
-                  error={this.hasError("newPassConfirmation")}
-                />
-              </FormControl>
-              <FormControl fullWidth className={classes.formWrapper}>
-                <FormHelperText>Email Account Integration</FormHelperText>
-                <EmailAccounts />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} className={classes.formCol}>
-              <div className={classes.avatarWrapper}>
-                <img
-                  src={AvatarPlaceholder}
-                  alt="avatar"
-                  className={classes.avatar}
-                />
-                <div className={classes.avatarEditWrapper}>
-                  <Fab
-                    size="small"
-                    color="primary"
-                    aria-label="Edit"
-                    className={classes.avatarEdit}
-                  >
-                    <EditIcon />
-                  </Fab>
+          <form>
+            <Grid container spacing={32}>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <TextField
+                    required
+                    error={this.hasError("name")}
+                    id="name"
+                    label="Full name"
+                    type="text"
+                    value={this.state.name !== null ? this.state.name : ""}
+                    onChange={this.handleChange("name")}
+                    inputProps={{ maxLength: 150 }}
+                  />
+                  <FormHelperText
+                    hidden={!this.hasError("name")}
+                    error={this.hasError("namr")}
+                  />
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField
+                    required
+                    error={this.hasError("email")}
+                    id="email"
+                    label="Email"
+                    type="email"
+                    value={this.state.email !== null ? this.state.email : ""}
+                    onChange={this.handleChange("email")}
+                    fullWidth
+                    className={classes.formInput}
+                    inputProps={{ maxLength: 150 }}
+                  />
+                  <FormHelperText
+                    hidden={!this.hasError("email")}
+                    error={this.hasError("email")}
+                  />
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField
+                    autoComplete="current-pass"
+                    error={this.hasError("currentPass")}
+                    id="currentPass"
+                    label="Current Password"
+                    type="password"
+                    value={
+                      this.state.currentPass !== null
+                        ? this.state.currentPass
+                        : ""
+                    }
+                    onChange={this.handleChange("currentPass")}
+                    fullWidth
+                    className={classes.formInput}
+                    inputProps={{ maxLength: 150 }}
+                  />
+                  <FormHelperText
+                    hidden={!this.hasError("currentPass")}
+                    error={this.hasError("currentPass")}
+                  />
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField
+                    autoComplete="new-pass"
+                    error={this.hasError("newPass")}
+                    id="newPass"
+                    label="New Password"
+                    type="password"
+                    value={
+                      this.state.newPass !== null ? this.state.currentPass : ""
+                    }
+                    onChange={this.handleChange("newPass")}
+                    fullWidth
+                    className={classes.formInput}
+                    inputProps={{ maxLength: 150 }}
+                  />
+                  <FormHelperText
+                    hidden={!this.hasError("newPass")}
+                    error={this.hasError("newPass")}
+                  />
+                </FormControl>
+                <FormControl fullWidth>
+                  <TextField
+                    autoComplete="new-pass-confirm"
+                    error={this.hasError("newPassConfirmation")}
+                    id="newPassConfirmation"
+                    label="Current Password Confirmation"
+                    type="password"
+                    value={
+                      this.state.newPassConfirmation !== null
+                        ? this.state.newPassConfirmation
+                        : ""
+                    }
+                    onChange={this.handleChange("newPassConfirmation")}
+                    fullWidth
+                    className={classes.formInput}
+                    inputProps={{ maxLength: 150 }}
+                  />
+                  <FormHelperText
+                    hidden={!this.hasError("newPassConfirmation")}
+                    error={this.hasError("newPassConfirmation")}
+                  />
+                </FormControl>
+                <FormControl fullWidth className={classes.formWrapper}>
+                  <FormHelperText>Email Account Integration</FormHelperText>
+                  <EmailAccounts />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6} className={classes.formCol}>
+                <div className={classes.avatarWrapper}>
+                  <img
+                    src={AvatarPlaceholder}
+                    alt="avatar"
+                    className={classes.avatar}
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="avatar-image"
+                    hidden
+                    onChange={e => this.OnAvatarLoad(e.target.files)}
+                  />
+                  <div className={classes.avatarEditWrapper}>
+                    <Fab
+                      size="small"
+                      color="primary"
+                      aria-label="Edit"
+                      className={classes.avatarEdit}
+                      onClick={e =>
+                        document.querySelector("#avatar-image").click()
+                      }
+                    >
+                      <EditIcon />
+                    </Fab>
+                  </div>
                 </div>
-              </div>
-              <FormControl fullWidth className={classes.formInput}>
-                <FormHelperText>
-                  Connect your company social media accounts
-                </FormHelperText>
-                <SocialMedaiAccounts />
-              </FormControl>
+                <FormControl fullWidth className={classes.formInput}>
+                  <FormHelperText>
+                    Connect your company social media accounts
+                  </FormHelperText>
+                  <SocialMedaiAccounts />
+                </FormControl>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </Paper>
       </div>
     );
