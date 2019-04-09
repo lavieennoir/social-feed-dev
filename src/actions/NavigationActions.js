@@ -3,7 +3,8 @@ import NavigationDispatcher from "../data/NavigationDispatcher";
 export const NavigationActionTypes = {
   FEED: "FEED",
   COMP_PROFILE: "COMP_PROFILE",
-  USER_PROFILE: "USER_PROFILE"
+  USER_PROFILE: "USER_PROFILE",
+  LEADERBOARD: "LEADERBOADR"
 };
 
 const Actions = {
@@ -20,6 +21,11 @@ const Actions = {
   openUserProfile() {
     NavigationDispatcher.dispatch({
       type: NavigationActionTypes.USER_PROFILE
+    });
+  },
+  openLeaderboard() {
+    NavigationDispatcher.dispatch({
+      type: NavigationActionTypes.LEADERBOARD
     });
   }
 };
