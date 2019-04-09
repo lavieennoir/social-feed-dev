@@ -118,6 +118,16 @@ class SideBar extends Component {
               </ListItemIcon>
               <ListItemText primary="User profile" />
             </ListItem>
+            <ListItem
+              button
+              key="leaderboard"
+              onClick={() => NavigationActions.openLeaderboard()}
+            >
+              <ListItemIcon>
+                <ViewQuilt />
+              </ListItemIcon>
+              <ListItemText primary="Leaderboard" />
+            </ListItem>
           </List>
         </Drawer>
       </MuiThemeProvider>

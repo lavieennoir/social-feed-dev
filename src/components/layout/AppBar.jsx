@@ -121,6 +121,30 @@ class AppBar extends Component {
             </Typography>
           </Breadcrumbs>
         );
+      case NavigationActionTypes.LEADERBOARD:
+        return (
+          <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
+            <Link
+              className={classes.breadcrumbs}
+              color="textPrimary"
+              component="button"
+              onClick={this.handleBreadcrumbClick}
+            >
+              Employees
+            </Link>
+            <Link
+              className={classes.breadcrumbs}
+              color="textPrimary"
+              component="button"
+              onClick={this.handleBreadcrumbClick}
+            >
+              Advocacy
+            </Link>
+            <Typography color="textPrimary" className={classes.breadcrumbs}>
+              Leaderboard
+            </Typography>
+          </Breadcrumbs>
+        );
       default:
     }
   }

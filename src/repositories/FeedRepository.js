@@ -1,7 +1,7 @@
 export default class FeedRepository {
   getList(success, failure) {
     let promise = new Promise((resolve, reject) => {
-      //Stup
+      //Stub
       setTimeout(() => {
         const res = [
           {
