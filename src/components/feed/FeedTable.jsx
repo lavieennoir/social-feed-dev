@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import FeedRepository from "../../repositories/FeedRepository";
 import SidebarStore from "../../stores/SidebarStore";
+import { SocialMediaNetworkTypes } from "../../actions/SocialMediaActions";
+import SocialMediaStore from "../../stores/SocialMediaStore";
+import FacebookAuthProvider from "../../data/authProviders/FacebookAuthProvider";
+import LinkedinAuthProvider from "../../data/authProviders/LinkedinAuthProvider";
 import classNames from "classnames";
 import FeedTableHead from "./FeedTableHead";
 import FeedTableToolbar from "./FeedTableToolbar";
@@ -94,6 +98,9 @@ class FeedTable extends Component {
       orderBy: null
     };
 
+    this.facebookAuth = new FacebookAuthProvider();
+    this.linkedinAuth = new LinkedinAuthProvider();
+
     this.onFeedLoaded = this.onFeedLoaded.bind(this);
     this.onFeedError = this.onFeedError.bind(this);
   }
@@ -130,7 +137,34 @@ class FeedTable extends Component {
     this.setState({ anchorShare: event.currentTarget });
   };
 
-  handleShareClose = () => {
+  handleShareClose = (socialNetwork, link) => () => {
+    switch (socialNetwork) {
+      case SocialMediaNetworkTypes.FACEBOOK:
+        const { facebookConnected } = SocialMediaStore.getState();
+        if (!facebookConnected) {
+          this.facebookAuth.login(() => {
+            this.facebookAuth.share(link);
+          });
+        } else {
+          this.facebookAuth.share(link);
+        }
+        break;
+      case SocialMediaNetworkTypes.TWITTER:
+        break;
+      case SocialMediaNetworkTypes.LINKEDIN:
+        const { linkedinConnected } = SocialMediaStore.getState();
+        if (!linkedinConnected) {
+          this.linkedinAuth.login(() => {
+            this.linkedinAuth.share(link);
+          });
+        } else {
+          this.linkedinAuth.share(link);
+        }
+        break;
+      case SocialMediaNetworkTypes.INSTAGRAM:
+        break;
+      default:
+    }
     this.setState({ anchorShare: null });
   };
 
@@ -307,7 +341,10 @@ class FeedTable extends Component {
                         >
                           <MenuItem
                             key="share-facebook"
-                            onClick={this.handleShareClose}
+                            onClick={this.handleShareClose(
+                              SocialMediaNetworkTypes.FACEBOOK,
+                              row.link
+                            )}
                           >
                             <img
                               src={FacebookGrayIcon}
@@ -318,7 +355,10 @@ class FeedTable extends Component {
                           </MenuItem>
                           <MenuItem
                             key="share-twitter"
-                            onClick={this.handleShareClose}
+                            onClick={this.handleShareClose(
+                              SocialMediaNetworkTypes.TWITTER,
+                              row.link
+                            )}
                           >
                             <img
                               src={TwitterGrayIcon}
@@ -329,7 +369,10 @@ class FeedTable extends Component {
                           </MenuItem>
                           <MenuItem
                             key="share-linkedin"
-                            onClick={this.handleShareClose}
+                            onClick={this.handleShareClose(
+                              SocialMediaNetworkTypes.LINKEDIN,
+                              row.link
+                            )}
                           >
                             <img
                               src={LinkedinGrayIcon}
@@ -340,7 +383,10 @@ class FeedTable extends Component {
                           </MenuItem>
                           <MenuItem
                             key="share-instagram"
-                            onClick={this.handleShareClose}
+                            onClick={this.handleShareClose(
+                              SocialMediaNetworkTypes.INSTAGRAM,
+                              row.link
+                            )}
                           >
                             <img
                               src={InstagramGrayIcon}

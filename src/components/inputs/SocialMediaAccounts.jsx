@@ -7,7 +7,11 @@ import TwitterIcon from "../../assets/twitter.svg";
 import LinkedinIcon from "../../assets/linkedin.svg";
 import InstagramIcon from "../../assets/instagram.svg";
 import FacebookAuthProvider from "../../data/authProviders/FacebookAuthProvider";
+import LinkedinAuthProvider from "../../data/authProviders/LinkedinAuthProvider";
 import SocialMediaStore from "../../stores/SocialMediaStore";
+import SocialMediaActions, {
+  SocialMediaNetworkTypes
+} from "../../actions/SocialMediaActions";
 
 const styles = theme =>
   createStyles({
@@ -53,11 +57,12 @@ class SocialMedaiAccounts extends Component {
     super(props);
 
     this.facebookAuth = new FacebookAuthProvider();
+    this.linkedinAuth = new LinkedinAuthProvider();
     this.state = {
-      facebookConnected: false,
-      twitterConnected: false,
-      linkedinConnected: false,
-      instagramConnecetd: false
+      facebookConnected: SocialMediaStore.getState().facebookConnected,
+      twitterConnected: SocialMediaStore.getState().twitterConnected,
+      linkedinConnected: SocialMediaStore.getState().linkedinConnected,
+      instagramConnecetd: SocialMediaStore.getState().instagramConnected
     };
   }
 
@@ -66,6 +71,14 @@ class SocialMedaiAccounts extends Component {
       this.facebookAuth.login();
     } else {
       this.facebookAuth.logout();
+    }
+  };
+  OnLinkedinClick = () => {
+    const { linkedinConnected } = SocialMediaStore.getState();
+    if (linkedinConnected) {
+      SocialMediaActions.disconect(SocialMediaNetworkTypes.LINKEDIN);
+    } else {
+      window.location.href = this.linkedinAuth.getAuthLink();
     }
   };
 
@@ -84,8 +97,18 @@ class SocialMedaiAccounts extends Component {
   }
 
   onSocialMediaConnectionChange = () => {
-    const { facebookConnected } = SocialMediaStore.getState();
-    this.setState({ facebookConnected });
+    const {
+      facebookConnected,
+      twitterConnected,
+      linkedinConnected,
+      instagramConnected
+    } = SocialMediaStore.getState();
+    this.setState({
+      facebookConnected,
+      twitterConnected,
+      linkedinConnected,
+      instagramConnected
+    });
   };
 
   render() {
@@ -125,6 +148,7 @@ class SocialMedaiAccounts extends Component {
           className={classNames(classes.accountCard, {
             [classes.connected]: linkedinConnected
           })}
+          onClick={this.OnLinkedinClick}
         >
           <img src={LinkedinIcon} alt="linkedin" />
           <Typography className={classes.linkedinText}>Linkedin</Typography>

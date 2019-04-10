@@ -12,10 +12,11 @@ export const SocialMediaNetworkTypes = {
 };
 
 const Actions = {
-  connect(networkType) {
+  connect(networkType, token = null) {
     SocialMediaDispatcher.dispatch({
       type: SocialMediaActionTypes.CONNECTED,
-      socialNetwork: networkType
+      socialNetwork: networkType,
+      token
     });
   },
   disconect(networkType) {

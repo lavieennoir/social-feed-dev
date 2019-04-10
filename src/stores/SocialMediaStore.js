@@ -14,7 +14,8 @@ class SocialMediaStore extends EventEmitter {
       facebookConnected: false,
       twitterConnected: false,
       instagramConnected: false,
-      linkedinConnected: false
+      linkedinConnected: false,
+      linkedinToken: null
     };
     this.facebookAuth = new FacebookAuthProvider();
     this.facebookAuth.getLoginStatus(status =>
@@ -39,11 +40,12 @@ class SocialMediaStore extends EventEmitter {
       case SocialMediaNetworkTypes.TWITTER:
         this.state.twitterConnected = isConnected;
         break;
-      case SocialMediaNetworkTypes.LINKEDIN:
+      case SocialMediaNetworkTypes.INSTAGRAM:
         this.state.instagramConnected = isConnected;
         break;
-      case SocialMediaNetworkTypes.INSTAGRAM:
+      case SocialMediaNetworkTypes.LINKEDIN:
         this.state.linkedinConnected = isConnected;
+        this.state.linkedinToken = isConnected ? action.token : null;
         break;
       default:
     }
