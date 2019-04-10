@@ -139,7 +139,7 @@ class CompanyFrom extends Component {
   OnFileDrop = files => {
     if (files.length > 0) {
       const file = files[files.length - 1];
-      if (file.size * 1024 <= this.state.maxFileSizeKb) {
+      if (file.size <= this.state.maxFileSizeKb * 1024) {
         this.setState({ file });
       }
     }
@@ -372,6 +372,7 @@ class CompanyFrom extends Component {
                       <br />
                       Drag &amp; Drop Company image or
                       <Link> upload clicking here</Link>
+                      {this.state.file ? <p>{this.state.file.name}</p> : ""}
                     </DragAndDropInput>
                   </ButtonBase>
                 </label>

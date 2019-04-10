@@ -14,7 +14,6 @@ export default class LeaderboardRepository {
         for (let i = 0; i < 12; i++) {
           res.push({ id: i, ...data });
         }
-        console.log(res);
         resolve({ items: res });
       }, 700);
     });
