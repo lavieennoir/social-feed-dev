@@ -5,6 +5,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Tooltip from "@material-ui/core/Tooltip";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  headCell: {
+    borderTop: "1px solid #e0e0e0"
+  }
+});
 
 class LeaderTableHead extends React.Component {
   constructor(props) {
@@ -28,7 +35,7 @@ class LeaderTableHead extends React.Component {
 
   render() {
     const { rows } = this.state;
-    const { order, orderBy } = this.props;
+    const { order, orderBy, classes } = this.props;
 
     return (
       <TableHead>
@@ -36,6 +43,7 @@ class LeaderTableHead extends React.Component {
           {rows.map(
             row => (
               <TableCell
+                className={classes.headCell}
                 key={row.id}
                 sortDirection={orderBy === row.id ? order : false}
               >
@@ -66,4 +74,4 @@ LeaderTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired
 };
-export default LeaderTableHead;
+export default withStyles(styles)(LeaderTableHead);

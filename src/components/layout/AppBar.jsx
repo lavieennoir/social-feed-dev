@@ -41,7 +41,14 @@ const styles = theme =>
       paddingRight: theme.spacing.unit
     },
     breadcrumbs: {
-      fontSize: theme.typography.fontSize * 1.5
+      fontSize: theme.typography.fontSize * 1.5,
+      [theme.breakpoints.down("xs")]: {
+        flexGrow: 1,
+        maxWidth: `calc(100% - ${theme.spacing.unit * 8}px)`,
+        "& li:last-child": {
+          flexGrow: "1"
+        }
+      }
     },
     saveButton: {
       marginLeft: "auto",

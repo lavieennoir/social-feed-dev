@@ -279,7 +279,6 @@ class FeedTable extends Component {
         >
           <FeedTableToolbar />
           <div className={classes.tableWrapper}>
-            <Divider />
             <Table className={classes.table}>
               <FeedTableHead
                 order={order}

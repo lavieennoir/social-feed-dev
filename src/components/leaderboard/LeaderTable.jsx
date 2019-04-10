@@ -235,7 +235,6 @@ class LeaderTable extends Component {
         >
           <LeaderTableToolbar />
           <div className={classes.tableWrapper}>
-            <Divider />
             <Table className={classes.table}>
               <LeaderTableHead
                 order={order}
