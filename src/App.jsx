@@ -9,6 +9,7 @@ import CompanyForm from "./components/companyProfile/CompanyForm";
 import UserForm from "./components/userProfile/UserForm";
 import NavigationStore from "./stores/NavigationStore";
 import { NavigationActionTypes } from "./actions/NavigationActions";
+import LinkedinAuthProvider from "./data/authProviders/LinkedinAuthProvider";
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class App extends Component {
     this.state = {
       currentPage: NavigationStore.getState().currentPage
     };
+    this.linkedinAuth = new LinkedinAuthProvider();
+    this.linkedinAuth.checkLoginUrl();
   }
 
   onNavigationChanged = () => {
