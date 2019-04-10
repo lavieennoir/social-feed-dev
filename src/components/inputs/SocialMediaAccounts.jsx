@@ -83,9 +83,6 @@ class SocialMedaiAccounts extends Component {
   };
 
   componentDidMount() {
-    this.facebookAuth.getLoginStatus(status =>
-      this.setState({ facebookConnected: status === "connected" })
-    );
     SocialMediaStore.on("change", this.onSocialMediaConnectionChange);
   }
 
