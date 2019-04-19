@@ -128,6 +128,16 @@ class SideBar extends Component {
               </ListItemIcon>
               <ListItemText primary="Leaderboard" />
             </ListItem>
+            <ListItem
+              button
+              key="manageQuestions"
+              onClick={() => NavigationActions.openManageQuestions()}
+            >
+              <ListItemIcon>
+                <ViewQuilt />
+              </ListItemIcon>
+              <ListItemText primary="manageQuestions" />
+            </ListItem>
           </List>
         </Drawer>
       </MuiThemeProvider>

@@ -47,6 +47,9 @@ const styles = theme =>
         maxWidth: `calc(100% - ${theme.spacing.unit * 8}px)`,
         "& li:last-child": {
           flexGrow: "1"
+        },
+        "button, p": {
+          maxWidth: "100%"
         }
       }
     },
@@ -149,6 +152,14 @@ class AppBar extends Component {
             </Link>
             <Typography color="textPrimary" className={classes.breadcrumbs}>
               Leaderboard
+            </Typography>
+          </Breadcrumbs>
+        );
+      case NavigationActionTypes.MANAGE_QUESTIONS:
+        return (
+          <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
+            <Typography color="textPrimary" className={classes.breadcrumbs}>
+              Manage Questions
             </Typography>
           </Breadcrumbs>
         );

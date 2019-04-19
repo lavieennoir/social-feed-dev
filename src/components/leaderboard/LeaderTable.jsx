@@ -13,8 +13,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Paper,
-  Divider
+  Paper
 } from "@material-ui/core";
 
 const styles = theme => ({

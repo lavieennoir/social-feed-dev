@@ -7,7 +7,7 @@ class NavigationStore extends EventEmitter {
     super();
 
     this.state = {
-      currentPage: NavigationActionTypes.COMP_PROFILE
+      currentPage: NavigationActionTypes.MANAGE_QUESTIONS
     };
   }
 

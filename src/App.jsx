@@ -10,6 +10,7 @@ import UserForm from "./components/userProfile/UserForm";
 import NavigationStore from "./stores/NavigationStore";
 import { NavigationActionTypes } from "./actions/NavigationActions";
 import LinkedinAuthProvider from "./data/authProviders/LinkedinAuthProvider";
+import ManageQuestionsPage from "./components/manageQuestions/ManageQuestionsPage";
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +51,9 @@ class App extends Component {
         break;
       case NavigationActionTypes.LEADERBOARD:
         currentPageComponent = <LeaderTable />;
+        break;
+      case NavigationActionTypes.MANAGE_QUESTIONS:
+        currentPageComponent = <ManageQuestionsPage />;
         break;
       default:
         currentPageComponent = <FeedTable />;
