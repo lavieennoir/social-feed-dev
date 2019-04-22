@@ -13,8 +13,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Paper,
-  Divider
+  Paper
 } from "@material-ui/core";
 
 const styles = theme => ({
@@ -235,7 +234,6 @@ class LeaderTable extends Component {
         >
           <LeaderTableToolbar />
           <div className={classes.tableWrapper}>
-            <Divider />
             <Table className={classes.table}>
               <LeaderTableHead
                 order={order}

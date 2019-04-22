@@ -4,7 +4,8 @@ export const NavigationActionTypes = {
   FEED: "FEED",
   COMP_PROFILE: "COMP_PROFILE",
   USER_PROFILE: "USER_PROFILE",
-  LEADERBOARD: "LEADERBOADR"
+  LEADERBOARD: "LEADERBOADR",
+  MANAGE_QUESTIONS: "MANAGE_QUESTIONS"
 };
 
 const Actions = {
@@ -26,6 +27,11 @@ const Actions = {
   openLeaderboard() {
     NavigationDispatcher.dispatch({
       type: NavigationActionTypes.LEADERBOARD
+    });
+  },
+  openManageQuestions() {
+    NavigationDispatcher.dispatch({
+      type: NavigationActionTypes.MANAGE_QUESTIONS
     });
   }
 };

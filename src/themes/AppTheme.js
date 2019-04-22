@@ -13,5 +13,12 @@ export default createMuiTheme({
     secondary: {
       main: "#565656"
     }
+  },
+  overrides: {
+    MuiTablePagination: {
+      root: {
+        overflowX: "auto"
+      }
+    }
   }
 });

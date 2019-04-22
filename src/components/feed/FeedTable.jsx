@@ -28,8 +28,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  ButtonBase,
-  Divider
+  ButtonBase
 } from "@material-ui/core";
 
 const styles = theme => ({
@@ -279,7 +278,6 @@ class FeedTable extends Component {
         >
           <FeedTableToolbar />
           <div className={classes.tableWrapper}>
-            <Divider />
             <Table className={classes.table}>
               <FeedTableHead
                 order={order}
@@ -328,7 +326,7 @@ class FeedTable extends Component {
                           id="share-menu"
                           anchorEl={anchorShare}
                           open={isShareOpen}
-                          onClose={this.handleShareClose}
+                          onClose={this.handleShareClose(null, null)}
                           getContentAnchorEl={null}
                           anchorOrigin={{
                             vertical: "bottom",
