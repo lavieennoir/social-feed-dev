@@ -3,6 +3,11 @@ import { withStyles, createStyles } from "@material-ui/core/styles";
 import { Typography, Link } from "@material-ui/core";
 import QuestionDetail from "./QuestionDetail";
 import ArrowedWrapper from "./ArrowedWrapper";
+import RepeatIcon from "@material-ui/icons/Repeat";
+import SettingsIcon from "@material-ui/icons/Settings";
+import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
+import classnames from "classnames";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme =>
   createStyles({
@@ -27,6 +32,9 @@ const styles = theme =>
     },
     secondaryInfo: {
       color: "#979797"
+    },
+    headerIcon: {
+      color: "#6E6E6E"
     },
     topSpacing: {
       marginTop: theme.spacing.unit * 5
@@ -91,7 +99,20 @@ class TabContainer extends Component {
         />
 
         <Typography variant="h6" className={classes.topSpacing}>
-          Questions Queue
+          <span className={classes.subheader}>
+            <span>Questions Queue</span>
+            <IconButton
+              className={classnames(classes.headerIcon, classes.spacer)}
+            >
+              <RepeatIcon />
+            </IconButton>
+            <IconButton className={classes.headerIcon}>
+              <SettingsIcon />
+            </IconButton>
+            <IconButton className={classes.headerIcon}>
+              <AddCircleIcon />
+            </IconButton>
+          </span>
         </Typography>
         <div className={classes.subheader}>
           <Typography className={classes.secondaryInfo}>
