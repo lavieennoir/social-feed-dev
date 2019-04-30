@@ -7,6 +7,7 @@ import FeedTable from "./components/feed/FeedTable";
 import LeaderTable from "./components/leaderboard/LeaderTable";
 import CompanyForm from "./components/companyProfile/CompanyForm";
 import UserForm from "./components/userProfile/UserForm";
+import CheckIns from "./components/check-ins/CheckIns";
 import NavigationStore from "./stores/NavigationStore";
 import { NavigationActionTypes } from "./actions/NavigationActions";
 import LinkedinAuthProvider from "./data/authProviders/LinkedinAuthProvider";
@@ -54,6 +55,9 @@ class App extends Component {
         break;
       case NavigationActionTypes.MANAGE_QUESTIONS:
         currentPageComponent = <ManageQuestionsPage />;
+        break;
+      case NavigationActionTypes.CHECKINS:
+        currentPageComponent = <CheckIns />;
         break;
       default:
         currentPageComponent = <FeedTable />;

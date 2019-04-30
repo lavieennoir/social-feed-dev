@@ -138,6 +138,16 @@ class SideBar extends Component {
               </ListItemIcon>
               <ListItemText primary="manageQuestions" />
             </ListItem>
+            <ListItem
+              button
+              key="manageQuestions"
+              onClick={() => NavigationActions.openCheckIns()}
+            >
+              <ListItemIcon>
+                <ViewQuilt />
+              </ListItemIcon>
+              <ListItemText primary="checkIns" />
+            </ListItem>
           </List>
         </Drawer>
       </MuiThemeProvider>

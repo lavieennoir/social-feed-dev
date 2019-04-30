@@ -5,10 +5,16 @@ export const NavigationActionTypes = {
   COMP_PROFILE: "COMP_PROFILE",
   USER_PROFILE: "USER_PROFILE",
   LEADERBOARD: "LEADERBOADR",
-  MANAGE_QUESTIONS: "MANAGE_QUESTIONS"
+  MANAGE_QUESTIONS: "MANAGE_QUESTIONS",
+  CHECKINS: "CHECKINS"
 };
 
 const Actions = {
+  openCheckIns() {
+    NavigationDispatcher.dispatch({
+      type: NavigationActionTypes.CHECKINS
+    });
+  },
   openFeed() {
     NavigationDispatcher.dispatch({
       type: NavigationActionTypes.FEED
