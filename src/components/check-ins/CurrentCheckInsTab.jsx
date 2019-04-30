@@ -6,20 +6,9 @@ import { SocialMediaNetworkTypes } from "../../actions/SocialMediaActions";
 import SocialMediaStore from "../../stores/SocialMediaStore";
 import FacebookAuthProvider from "../../data/authProviders/FacebookAuthProvider";
 import LinkedinAuthProvider from "../../data/authProviders/LinkedinAuthProvider";
-// import classNames from "classnames";
 import CheckInsTableHead from "./CheckInsTableHead";
 import CheckInsTableBody from "./CheckInsTableBody";
-// import DefaultImage from "../../assets/Overlay.svg";
-// import MoreVertIcon from "@material-ui/icons/MoreVert";
-// import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
-// import FacebookGrayIcon from "../../assets/FacebookGray.svg";
-// import InstagramGrayIcon from "../../assets/InstagramGray.svg";
-// import LinkedinGrayIcon from "../../assets/LinkedinGray.svg";
-// import TwitterGrayIcon from "../../assets/TwitterGray.svg";
-// import { createMuiTheme } from "@material-ui/core/styles";
-// import { shadows } from "@material-ui/system";
-import { Typography, Table, Paper, Link, ButtonBase } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core";
+import { Typography, Table } from "@material-ui/core";
 
 const rowsHead = [
   { id: 0, label: "Name" },
@@ -273,19 +262,7 @@ class CurrentCheckInsTab extends Component {
 
   render() {
     const { classes } = this.props;
-    const {
-      errorMessage,
-      isLoaded,
-      items,
-      isSidebarOpen,
-      anchorAction,
-      anchorShare,
-      page,
-      rowsPerPage,
-      order,
-      orderBy
-    } = this.state;
-    const isShareOpen = anchorShare ? true : false;
+    const { errorMessage, isLoaded, items, order, orderBy } = this.state;
 
     if (errorMessage) {
       return (
