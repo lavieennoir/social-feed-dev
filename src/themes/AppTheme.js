@@ -19,6 +19,16 @@ export default createMuiTheme({
       root: {
         overflowX: "auto"
       }
+    },
+    MuiTableRow: {
+      root: {
+        height: "100%"
+      }
+    },
+    MuiTableCell: {
+      body: {
+        height: "100%"
+      }
     }
   }
 });

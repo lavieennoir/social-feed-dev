@@ -11,6 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircleOutline";
 import classNames from "classnames";
+import { Collapse } from "@material-ui/core";
 
 const styles = theme => ({
   headCell: {
@@ -36,6 +37,10 @@ const styles = theme => ({
     height: "30px",
     width: "30px",
     marginRight: "10px"
+  },
+  cellCollapsed: {
+    padding: 0,
+    borderBottom: "none"
   }
 });
 
@@ -79,62 +84,81 @@ class FeedTableHead extends React.Component {
   };
 
   renderChild = row => {
+    const isExpanded = this.state.statusRow.includes(row.id);
     return (
       <React.Fragment>
-        {this.state.statusRow.includes(row.id) && (
-          <React.Fragment>
-            {row.childs.map(child => (
-              <TableRow
-                key={
-                  "parent" + row.id.toString() + "child" + child.id.toString()
-                }
-              >
-                <TableCell>
-                  <div className={this.props.classes.cellChildName}>
-                    <div className={this.props.classes.cellNameImg}>
-                      <image src="" />
-                    </div>
-                    <div>
-                      {child.name.name}
-                      <br />
-                      {child.name.subtext}
-                    </div>
+        {row.childs.map(child => (
+          <TableRow
+            key={"parent" + row.id.toString() + "child" + child.id.toString()}
+          >
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>
+                <div className={this.props.classes.cellChildName}>
+                  <div className={this.props.classes.cellNameImg}>
+                    <image src="" />
                   </div>
-                </TableCell>
-                <TableCell>
-                  <div className={this.postCell}>{child.dueDate}</div>
-                </TableCell>
-                <TableCell>{child.submitDate}</TableCell>
-                <TableCell>
-                  <IconButton
-                    aria-label="More"
-                    aria-owns={this.isActionOpen ? "action-menu" : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleActionClick}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    id="action-menu"
-                    anchorEl={this.anchorAction}
-                    open={this.isActionOpen}
-                    onClose={this.handleActionClose}
-                  >
-                    <MenuItem key="action1" onClick={this.handleActionClose}>
-                      Action 1
-                    </MenuItem>
-                    <MenuItem key="action2" onClick={this.handleActionClose}>
-                      Action 2
-                    </MenuItem>
-                    <MenuItem key="action3" onClick={this.handleActionClose}>
-                      Action 3
-                    </MenuItem>
-                  </Menu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </React.Fragment>
-        )}
+                  <div>
+                    {child.name.name}
+                    <br />
+                    {child.name.subtext}
+                  </div>
+                </div>
+              </Collapse>
+            </TableCell>
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>
+                <div className={this.postCell}>{child.dueDate}</div>
+              </Collapse>
+            </TableCell>
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>{child.submitDate}</Collapse>
+            </TableCell>
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>
+                <IconButton
+                  aria-label="More"
+                  aria-owns={this.isActionOpen ? "action-menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleActionClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="action-menu"
+                  anchorEl={this.anchorAction}
+                  open={this.isActionOpen}
+                  onClose={this.handleActionClose}
+                >
+                  <MenuItem key="action1" onClick={this.handleActionClose}>
+                    Action 1
+                  </MenuItem>
+                  <MenuItem key="action2" onClick={this.handleActionClose}>
+                    Action 2
+                  </MenuItem>
+                  <MenuItem key="action3" onClick={this.handleActionClose}>
+                    Action 3
+                  </MenuItem>
+                </Menu>
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        ))}
       </React.Fragment>
     );
   };
