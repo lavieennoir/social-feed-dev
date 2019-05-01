@@ -163,6 +163,14 @@ class AppBar extends Component {
             </Typography>
           </Breadcrumbs>
         );
+      case NavigationActionTypes.CHECKINS:
+        return (
+          <Breadcrumbs aria-label="Breadcrumb" className={classes.breadcrumbs}>
+            <Typography color="textPrimary" className={classes.breadcrumbs}>
+              Check Ins
+            </Typography>
+          </Breadcrumbs>
+        );
       default:
     }
   }
