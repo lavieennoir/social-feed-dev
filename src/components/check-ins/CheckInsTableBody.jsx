@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,13 +10,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircleOutline";
-import { Table } from "@material-ui/core";
 import classNames from "classnames";
-import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary
-} from "@material-ui/core";
+import { Collapse } from "@material-ui/core";
 
 const styles = theme => ({
   headCell: {
@@ -45,6 +37,10 @@ const styles = theme => ({
     height: "30px",
     width: "30px",
     marginRight: "10px"
+  },
+  cellCollapsed: {
+    padding: 0,
+    borderBottom: "none"
   }
 });
 
@@ -61,7 +57,7 @@ class FeedTableHead extends React.Component {
   changeStatusRow = parentId => {
     const checkParentId = this.state.statusRow.indexOf(parentId);
     const statusRow = this.state.statusRow;
-    if (checkParentId != -1) {
+    if (checkParentId !== -1) {
       statusRow.splice(checkParentId);
     } else {
       statusRow.push(parentId);
@@ -76,7 +72,7 @@ class FeedTableHead extends React.Component {
   };
 
   contains = (elem, arr) => {
-    return arr.indexOf(elem) != -1;
+    return arr.indexOf(elem) !== -1;
   };
 
   handleActionClick = event => {
@@ -88,62 +84,81 @@ class FeedTableHead extends React.Component {
   };
 
   renderChild = row => {
+    const isExpanded = this.state.statusRow.includes(row.id);
     return (
       <React.Fragment>
-        {this.state.statusRow.includes(row.id) && (
-          <React.Fragment>
-            {row.childs.map(child => (
-              <TableRow
-                key={
-                  "parent" + row.id.toString() + "child" + child.id.toString()
-                }
-              >
-                <TableCell>
-                  <div className={this.props.classes.cellChildName}>
-                    <div className={this.props.classes.cellNameImg}>
-                      <image src="" />
-                    </div>
-                    <div>
-                      {child.name.name}
-                      <br />
-                      {child.name.subtext}
-                    </div>
+        {row.childs.map(child => (
+          <TableRow
+            key={"parent" + row.id.toString() + "child" + child.id.toString()}
+          >
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>
+                <div className={this.props.classes.cellChildName}>
+                  <div className={this.props.classes.cellNameImg}>
+                    <image src="" />
                   </div>
-                </TableCell>
-                <TableCell>
-                  <div className={this.postCell}>{child.dueDate}</div>
-                </TableCell>
-                <TableCell>{child.submitDate}</TableCell>
-                <TableCell>
-                  <IconButton
-                    aria-label="More"
-                    aria-owns={this.isActionOpen ? "action-menu" : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleActionClick}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    id="action-menu"
-                    anchorEl={this.anchorAction}
-                    open={this.isActionOpen}
-                    onClose={this.handleActionClose}
-                  >
-                    <MenuItem key="action1" onClick={this.handleActionClose}>
-                      Action 1
-                    </MenuItem>
-                    <MenuItem key="action2" onClick={this.handleActionClose}>
-                      Action 2
-                    </MenuItem>
-                    <MenuItem key="action3" onClick={this.handleActionClose}>
-                      Action 3
-                    </MenuItem>
-                  </Menu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </React.Fragment>
-        )}
+                  <div>
+                    {child.name.name}
+                    <br />
+                    {child.name.subtext}
+                  </div>
+                </div>
+              </Collapse>
+            </TableCell>
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>
+                <div className={this.postCell}>{child.dueDate}</div>
+              </Collapse>
+            </TableCell>
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>{child.submitDate}</Collapse>
+            </TableCell>
+            <TableCell
+              className={classNames({
+                [this.props.classes.cellCollapsed]: !isExpanded
+              })}
+            >
+              <Collapse in={isExpanded}>
+                <IconButton
+                  aria-label="More"
+                  aria-owns={this.isActionOpen ? "action-menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleActionClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="action-menu"
+                  anchorEl={this.anchorAction}
+                  open={this.isActionOpen}
+                  onClose={this.handleActionClose}
+                >
+                  <MenuItem key="action1" onClick={this.handleActionClose}>
+                    Action 1
+                  </MenuItem>
+                  <MenuItem key="action2" onClick={this.handleActionClose}>
+                    Action 2
+                  </MenuItem>
+                  <MenuItem key="action3" onClick={this.handleActionClose}>
+                    Action 3
+                  </MenuItem>
+                </Menu>
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        ))}
       </React.Fragment>
     );
   };
@@ -151,7 +166,7 @@ class FeedTableHead extends React.Component {
   render() {
     const { rows, anchorAction, statusRow } = this.state;
     const isActionOpen = anchorAction ? true : false;
-    const { order, orderBy, classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <TableBody>
@@ -161,10 +176,10 @@ class FeedTableHead extends React.Component {
               <TableCell>
                 <div
                   className={classNames(classes.cellName, {
-                    [classes.noChild]: row.childs.length == 0
+                    [classes.noChild]: row.childs.length === 0
                   })}
                 >
-                  {row.childs.length != 0 && (
+                  {row.childs.length !== 0 && (
                     <IconButton onClick={() => this.changeStatusRow(row.id)}>
                       {statusRow.includes(row.id) ? (
                         <RemoveCircleIcon />

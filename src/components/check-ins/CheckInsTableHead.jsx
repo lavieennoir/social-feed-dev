@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -40,7 +38,7 @@ class FeedTableHead extends React.Component {
                 key={row.id}
                 sortDirection={orderBy === row.id ? order : false}
               >
-                {row.id == 0 ? (
+                {row.id === 0 ? (
                   <div style={{ paddingLeft: "50px" }}>{row.label}</div>
                 ) : (
                   row.label
