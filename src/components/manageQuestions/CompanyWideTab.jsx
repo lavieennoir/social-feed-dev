@@ -8,6 +8,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
 import classnames from "classnames";
 import IconButton from "@material-ui/core/IconButton";
+import ToggleQuestionAction, { ToggleQuestionName } from '../../actions/ToggleQustionActions';
 
 const styles = theme =>
   createStyles({
@@ -41,6 +42,8 @@ const styles = theme =>
     }
   });
 
+  
+
 class TabContainer extends Component {
   constructor(props) {
     super(props);
@@ -56,12 +59,25 @@ class TabContainer extends Component {
     this.setState(state => ({
       isQuestionDetailsVisbleCheckIn: !state.isQuestionDetailsVisbleCheckIn
     }));
+    if (this.state.isQuestionDetailsVisbleCheckIn) {
+      ToggleQuestionAction.showName(); 
+    } else{
+      ToggleQuestionAction.hideName();
+    }
+
   };
 
   ToogleQuestionDetailsQueue = () => {
     this.setState(state => ({
-      isQuestionDetailsVisbleQueue: !state.isQuestionDetailsVisbleQueue
+      isQuestionDetailsVisbleCheckIn: !state.isQuestionDetailsVisbleCheckIn
     }));
+    if (this.state.isQuestionDetailsVisbleCheckIn) {
+      ToggleQuestionAction.showSubName();
+
+    } else{
+      ToggleQuestionAction.hideSubName();
+    }
+
   };
 
   render() {
@@ -88,11 +104,13 @@ class TabContainer extends Component {
         </div>
         <QuestionDetail
           title="What went well this week?"
+          section="Name"
           isText
           isWeeklyQuestion
         />
         <QuestionDetail
           title="What's your biggest challange right now, and how can I help?"
+          section="Name"
           isText
           isWeeklyQuestion
           isOptional
@@ -149,7 +167,7 @@ class TabContainer extends Component {
             isText
             isWeeklyQuestion
             isOptional
-            createdAt={new Date(2019, 3, 10)}
+            createdAt={new Date(2019, 3, 11)}
           />
           <QuestionDetail
             title="Is there a tool or service that wuold help in your role?"

@@ -55,6 +55,7 @@ class App extends Component {
       case NavigationActionTypes.MANAGE_QUESTIONS:
         currentPageComponent = <ManageQuestionsPage />;
         break;
+        
       default:
         currentPageComponent = <FeedTable />;
         break;
