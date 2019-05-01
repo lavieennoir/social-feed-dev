@@ -7,6 +7,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabContainer from "./TabContainer";
 import TeamCheckInsTab from "./TeamCheckInsTab";
+import NavBar from "./NavBar";
+import Avatar from "./Avatar"
 
 const styles = theme =>
   createStyles({
@@ -135,7 +137,9 @@ class CheckIns extends Component {
           <Tab label="Follow-up`s" />
         </Tabs>
         {activeTab === this.TabNavigationValues.MY_CHECK_INS && (
-          <TabContainer>My Check-ins</TabContainer>
+          <TabContainer>
+            <Avatar />
+          </TabContainer>
         )}
         {activeTab === this.TabNavigationValues.TEAM_CHECK_INS && (
           <TabContainer>
