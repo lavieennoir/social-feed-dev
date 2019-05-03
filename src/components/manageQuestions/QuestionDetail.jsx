@@ -10,6 +10,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import TextFormatIcon from "@material-ui/icons/TextFormat";
 import ReplayIcon from "@material-ui/icons/Replay";
 import DateFormatter from "./DateFormatter";
+import ToggleQuestionStore from '../../stores/ToggleQuestionStore'
 
 const ExpansionPanel = withStyles(theme => ({
   root: {
@@ -107,6 +108,27 @@ class QuestionDetail extends Component {
       isExpanded: expanded
     });
   };
+
+  componentDidMount() {
+    ToggleQuestionStore.on("change", this.ToggleQuestion);
+  }
+
+  componentWillUnmount() {
+    ToggleQuestionStore.removeListener("change", this.ToggleQuestion);
+  }
+  
+  ToggleQuestion = () => {
+
+    if (this.props.section === "Name") {
+      this.setState({
+        isExpanded: !ToggleQuestionStore.getState().isNameHidden
+      }) 
+    } else {
+      this.setState({
+        isExpanded: !ToggleQuestionStore.getState().isSubNameHidden
+      })
+    }
+  }
 
   render() {
     const {

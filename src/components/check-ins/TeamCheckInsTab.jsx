@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import classNames from "classnames";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SidebarStore from "../../stores/SidebarStore";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabContainer from "./TabContainer";
 import CurrentCheckInsTab from "./CurrentCheckInsTab";
-import { shadows } from "@material-ui/system";
 
 const styles = theme =>
   createStyles({
