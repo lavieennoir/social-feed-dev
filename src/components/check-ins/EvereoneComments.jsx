@@ -70,7 +70,9 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: "5px",
-    padding: "0"
+    padding: "0",
+    width: "35px",
+    height: "35px"
   },
   commentList: {
     paddingLeft: "10px",
@@ -160,7 +162,7 @@ const weeks = [
     ]
   },
   {
-    id: "0",
+    id: "1",
     posts: [
       {
         id: "0",
@@ -196,17 +198,25 @@ class EvereoneComments extends Component {
     this.state = {
       anchorAction: null,
       weeks: weeks,
-      comment: "",
+      comment: { weekId: "", postId: "" },
       favorite: false
     };
   }
 
-  commentActionClick = id => {
-    this.setState(state => ({ comment: state.comment == id ? "" : id }));
+  commentActionClick = (weekId, postId) => {
+    this.setState(state => ({
+      comment: {
+        weekId: weekId,
+        postId:
+          state.comment.postId == postId && state.comment.weekId == weekId
+            ? ""
+            : postId
+      }
+    }));
   };
 
   favoriteActionClick = () => {
-    this.setState(state => ({ favorite: !state.favorite }));
+    this.setState(state => ({ favorite: state.favorite }));
   };
 
   handleActionClick = event => {
@@ -248,7 +258,7 @@ class EvereoneComments extends Component {
                   <span className={classes.postActions}>
                     <IconButton
                       className={classes.iconButton}
-                      onClick={() => this.commentActionClick(post.id)}
+                      onClick={() => this.commentActionClick(week.id, post.id)}
                     >
                       <Comment color="action" />
                     </IconButton>
@@ -287,8 +297,7 @@ class EvereoneComments extends Component {
                 <div className={classes.commentsBlock}>
                   <List
                     className={classNames(classes.commentList, {
-                      [classes.nullVerticalPadding]:
-                        post.comments.length == 0 && comment != post.id
+                      [classes.nullVerticalPadding]: post.comments.length == 0
                     })}
                   >
                     {post.comments.map(comment => (
@@ -310,7 +319,12 @@ class EvereoneComments extends Component {
                       </listItem>
                     ))}
                     <Collapse
-                      in={comment == post.id && comment !== ""}
+                      in={
+                        comment.weekId !== "" &&
+                        comment.postId !== "" &&
+                        comment.weekId == week.id &&
+                        comment.postId == post.id
+                      }
                       timeout="auto"
                       unmountOnExit
                     >
