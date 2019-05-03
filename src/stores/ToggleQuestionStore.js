@@ -1,43 +1,39 @@
 import {
-    ToggleQuestionActions,
-    ToggleQuestionName
-  } from "../actions/ToggleQustionActions";
-  import ToggleQuestionDispatcher from "../data/ToggleQuestionDispatcher";
-  import EventEmitter from "events";
+  ToggleQuestionActions,
+  ToggleQuestionName
+} from "../actions/ToggleQustionActions";
+import ToggleQuestionDispatcher from "../data/ToggleQuestionDispatcher";
+import EventEmitter from "events";
 
-  
-  class ToggleQuestionStore extends EventEmitter {
-    constructor() {
-      super();
-  
-      this.state = {
-        isNameHidden: false,
-        isSubNameHidden: false
-      };
+class ToggleQuestionStore extends EventEmitter {
+  constructor() {
+    super();
 
-    }
-   
-    getState() {
-      return this.state;
-    }
-  
-    handleActions(action) {
-      const isHidden = action.type === ToggleQuestionActions.HIDE;
-
-      if (action.name === ToggleQuestionName.NAME) {
-        this.state.isNameHidden = isHidden
-      } else {
-          this.state.isSubNameHidden = isHidden 
-      }
-          
-      this.emit("change");
-    }
+    this.state = {
+      isNameHidden: true,
+      isSubNameHidden: true
+    };
   }
 
-  
-  const toggleQuestionStore = new ToggleQuestionStore();
-  ToggleQuestionDispatcher.register(
-    toggleQuestionStore.handleActions.bind(toggleQuestionStore)
-  );
-  export default toggleQuestionStore;
-  
+  getState() {
+    return this.state;
+  }
+
+  handleActions(action) {
+    const isHidden = action.type === ToggleQuestionActions.HIDE;
+
+    if (action.name === ToggleQuestionName.NAME) {
+      this.state.isNameHidden = isHidden;
+    } else {
+      this.state.isSubNameHidden = isHidden;
+    }
+
+    this.emit("change");
+  }
+}
+
+const toggleQuestionStore = new ToggleQuestionStore();
+ToggleQuestionDispatcher.register(
+  toggleQuestionStore.handleActions.bind(toggleQuestionStore)
+);
+export default toggleQuestionStore;

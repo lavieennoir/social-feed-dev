@@ -8,7 +8,9 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
 import classnames from "classnames";
 import IconButton from "@material-ui/core/IconButton";
-import ToggleQuestionAction, { ToggleQuestionName } from '../../actions/ToggleQustionActions';
+import ToggleQuestionAction, {
+  ToggleQuestionName
+} from "../../actions/ToggleQustionActions";
 
 const styles = theme =>
   createStyles({
@@ -42,8 +44,6 @@ const styles = theme =>
     }
   });
 
-  
-
 class TabContainer extends Component {
   constructor(props) {
     super(props);
@@ -60,24 +60,21 @@ class TabContainer extends Component {
       isQuestionDetailsVisbleCheckIn: !state.isQuestionDetailsVisbleCheckIn
     }));
     if (this.state.isQuestionDetailsVisbleCheckIn) {
-      ToggleQuestionAction.showName(); 
-    } else{
+      ToggleQuestionAction.showName();
+    } else {
       ToggleQuestionAction.hideName();
     }
-
   };
 
   ToogleQuestionDetailsQueue = () => {
     this.setState(state => ({
-      isQuestionDetailsVisbleCheckIn: !state.isQuestionDetailsVisbleCheckIn
+      isQuestionDetailsVisbleQueue: !state.isQuestionDetailsVisbleQueue
     }));
-    if (this.state.isQuestionDetailsVisbleCheckIn) {
+    if (this.state.isQuestionDetailsVisbleQueue) {
       ToggleQuestionAction.showSubName();
-
-    } else{
+    } else {
       ToggleQuestionAction.hideSubName();
     }
-
   };
 
   render() {
