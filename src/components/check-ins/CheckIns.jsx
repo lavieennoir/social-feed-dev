@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import classNames from "classnames";
 import { withStyles, createStyles } from "@material-ui/core/styles";
@@ -7,6 +6,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabContainer from "./TabContainer";
 import TeamCheckInsTab from "./TeamCheckInsTab";
+import EvereoneCheckInsTab from "./EvereoneCheckInsTab";
+import { Paper } from "@material-ui/core";
+import { right } from "@material-ui/system/positions";
+import NavBar from "./NavBar";
 import Avatar from "./Avatar"
 import BlueForm from "../follow-ups/BlueForm"
 import NameList from "../follow-ups/FollowTabs";
@@ -152,7 +155,7 @@ class CheckIns extends Component {
           </TabContainer>
         )}
         {activeTab === this.TabNavigationValues.EVERYONES && (
-          <TabContainer>Everyone`s check-ins</TabContainer>
+          <EvereoneCheckInsTab />
         )}
         {activeTab === this.TabNavigationValues.FOLLOW_UPS && (
           <TabContainer>
