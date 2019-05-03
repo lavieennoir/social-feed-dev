@@ -7,7 +7,7 @@ class NavigationStore extends EventEmitter {
     super();
 
     this.state = {
-      currentPage: NavigationActionTypes.CHECKINS
+      currentPage: NavigationActionTypes.FEED
     };
   }
 
