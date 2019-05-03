@@ -217,22 +217,23 @@ class EvereoneCheckInsTab extends Component {
               Anna Cecy`s Recent Check-Ins
             </ListItem>
             {dates.map(date => (
-              <React.Fragment>
+              <React.Fragment key={"dateBlock" + date.id}>
                 <ListItem
+                  key={"dateItem" + date.id}
                   onClick={() => this.selectListItem(date.id)}
                   className={classNames(classes.listItem, {
                     [classes.boldItem]:
-                      isSelected && selectedListItem == date.id
+                      isSelected && selectedListItem === date.id
                   })}
                   button
                 >
-                  {isSelected && selectedListItem == date.id && (
+                  {isSelected && selectedListItem === date.id && (
                     <div className={classes.leftSolid} />
                   )}
-                  <div className={classes.period}>
+                  <div key="period" className={classes.period}>
                     {date.firstDate} - {date.lastDate}
                   </div>
-                  <div className={classes.submitedOnDate}>
+                  <div key="submitedOnDate" className={classes.submitedOnDate}>
                     Submitted on {date.submited}
                   </div>
                 </ListItem>

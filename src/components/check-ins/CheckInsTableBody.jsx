@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { withStyles } from "@material-ui/core/styles";
@@ -44,7 +43,7 @@ const styles = theme => ({
   }
 });
 
-class FeedTableHead extends React.Component {
+class CheckInsTableBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,10 +66,6 @@ class FeedTableHead extends React.Component {
     });
   };
 
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
-
   contains = (elem, arr) => {
     return arr.indexOf(elem) !== -1;
   };
@@ -83,14 +78,12 @@ class FeedTableHead extends React.Component {
     this.setState({ anchorAction: null });
   };
 
-  renderChild = row => {
+  renderChild = (row, isActionOpen = false) => {
     const isExpanded = this.state.statusRow.includes(row.id);
     return (
       <React.Fragment>
         {row.childs.map(child => (
-          <TableRow
-            key={"parent" + row.id.toString() + "child" + child.id.toString()}
-          >
+          <TableRow key={"parent" + row.id + "child" + child.id}>
             <TableCell
               className={classNames({
                 [this.props.classes.cellCollapsed]: !isExpanded
@@ -99,7 +92,7 @@ class FeedTableHead extends React.Component {
               <Collapse in={isExpanded}>
                 <div className={this.props.classes.cellChildName}>
                   <div className={this.props.classes.cellNameImg}>
-                    <image src="" />
+                    {/* <image src="" /> */}
                   </div>
                   <div>
                     {child.name.name}
@@ -133,7 +126,9 @@ class FeedTableHead extends React.Component {
               <Collapse in={isExpanded}>
                 <IconButton
                   aria-label="More"
-                  aria-owns={this.isActionOpen ? "action-menu" : undefined}
+                  aria-owns={
+                    this.state.isActionOpen ? "action-menu" : undefined
+                  }
                   aria-haspopup="true"
                   onClick={this.handleActionClick}
                 >
@@ -142,7 +137,7 @@ class FeedTableHead extends React.Component {
                 <Menu
                   id="action-menu"
                   anchorEl={this.anchorAction}
-                  open={this.isActionOpen}
+                  open={isActionOpen}
                   onClose={this.handleActionClose}
                 >
                   <MenuItem key="action1" onClick={this.handleActionClose}>
@@ -165,14 +160,14 @@ class FeedTableHead extends React.Component {
 
   render() {
     const { rows, anchorAction, statusRow } = this.state;
-    const isActionOpen = anchorAction ? true : false;
     const { classes } = this.props;
+    const isActionOpen = this.state.anchorAction ? true : false;
 
     return (
       <TableBody>
         {rows.map(row => (
-          <React.Fragment>
-            <TableRow key={"parent" + row.id.toString()}>
+          <React.Fragment key={"fragment" + row.id}>
+            <TableRow key={"parent" + row.id}>
               <TableCell>
                 <div
                   className={classNames(classes.cellName, {
@@ -189,7 +184,7 @@ class FeedTableHead extends React.Component {
                     </IconButton>
                   )}
                   <div className={classes.cellNameImg}>
-                    <image src="" />
+                    {/* <image src="" /> */}
                   </div>
                   <div>
                     {row.name.name}
@@ -229,7 +224,7 @@ class FeedTableHead extends React.Component {
                 </Menu>
               </TableCell>
             </TableRow>
-            {this.renderChild(row)}
+            {this.renderChild(row, this.isActionOpen)}
           </React.Fragment>
         ))}
       </TableBody>
@@ -237,8 +232,4 @@ class FeedTableHead extends React.Component {
   }
 }
 
-FeedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired
-};
-export default withStyles(styles)(FeedTableHead);
+export default withStyles(styles)(CheckInsTableBody);

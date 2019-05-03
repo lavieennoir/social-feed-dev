@@ -28,7 +28,7 @@ const rowsBody = [
         submitDate: "April 3"
       },
       {
-        id: 1,
+        id: 2,
         name: { name: "Anna NoGallo", subtext: "" },
         dueDate: "April 4",
         submitDate: "April 3"
@@ -48,7 +48,7 @@ const rowsBody = [
         submitDate: "April 3"
       },
       {
-        id: 1,
+        id: 2,
         name: { name: "Anna NoGallo", subtext: "" },
         dueDate: "April 4",
         submitDate: "April 3"

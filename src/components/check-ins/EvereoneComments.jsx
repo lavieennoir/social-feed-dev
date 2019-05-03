@@ -13,7 +13,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import InsertEmoticon from "@material-ui/icons/InsertEmoticon";
 import WebAsset from "@material-ui/icons/WebAsset";
 import MailOutline from "@material-ui/icons/MailOutline";
-import { Typography, List } from "@material-ui/core";
+import { Typography, List, ListItem } from "@material-ui/core";
 import classNames from "classnames";
 import Button from "@material-ui/core/Button";
 
@@ -160,7 +160,7 @@ const weeks = [
     ]
   },
   {
-    id: "0",
+    id: "1",
     posts: [
       {
         id: "0",
@@ -202,7 +202,7 @@ class EvereoneComments extends Component {
   }
 
   commentActionClick = id => {
-    this.setState(state => ({ comment: state.comment == id ? "" : id }));
+    this.setState(state => ({ comment: state.comment === id ? "" : id }));
   };
 
   favoriteActionClick = () => {
@@ -228,12 +228,15 @@ class EvereoneComments extends Component {
     return (
       <React.Fragment>
         {weeks.map(week => (
-          <div className={classes.comments}>
+          <div key={"commentWeek" + week.id} className={classes.comments}>
             <Typography variant="body2" className={classes.commentsTitle}>
               What went well this week?
             </Typography>
             {week.posts.map(post => (
-              <div className={classes.commentsBody}>
+              <div
+                key={"week" + week.id + "postBody" + post.id}
+                className={classes.commentsBody}
+              >
                 <Typography className={classes.post} variant="body2">
                   <span>This was a really nice and productive week.</span>
                   <span className={classes.like}>
@@ -288,33 +291,48 @@ class EvereoneComments extends Component {
                   <List
                     className={classNames(classes.commentList, {
                       [classes.nullVerticalPadding]:
-                        post.comments.length == 0 && comment != post.id
+                        post.comments.length === 0 && comment !== post.id
                     })}
                   >
                     {post.comments.map(comment => (
-                      <listItem className={classes.commentListItem}>
+                      <ListItem
+                        key={
+                          "week" +
+                          week.id +
+                          "post" +
+                          post.id +
+                          "Comment" +
+                          comment.id
+                        }
+                        className={classes.commentListItem}
+                      >
                         <div
                           className={classNames(
                             classes.commentPersonIcon,
                             classes.nullMargin
                           )}
-                        />{" "}
-                        <Typography>
-                          <b>Ana Gallo</b>
-                          <span className={classes.someDate}>Just now</span>
+                        />
+                        <div>
+                          <Typography>
+                            <b>Ana Gallo</b>
+                            <span className={classes.someDate}>Just now</span>
+                          </Typography>
                           <div className={classes.subcomment}>
                             This is an example of a comment related to the
                             previous question
                           </div>
-                        </Typography>
-                      </listItem>
+                        </div>
+                      </ListItem>
                     ))}
                     <Collapse
-                      in={comment == post.id && comment !== ""}
+                      in={comment === post.id && comment !== ""}
                       timeout="auto"
                       unmountOnExit
                     >
-                      <listItem className={classes.commentListItem}>
+                      <ListItem
+                        key={"commentCreated" + week.id}
+                        className={classes.commentListItem}
+                      >
                         <div
                           className={classNames(
                             classes.commentPersonIcon,
@@ -354,7 +372,7 @@ class EvereoneComments extends Component {
                             Post comment
                           </Button>
                         </div>
-                      </listItem>
+                      </ListItem>
                     </Collapse>
                   </List>
                 </div>

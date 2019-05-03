@@ -144,7 +144,7 @@ const weeks = [
             id: "1"
           }
         ]
-      },
+      }
       // {
       //   id: "1",
       //   comments: []
@@ -199,15 +199,12 @@ class EvereoneComments extends Component {
     const isActionOpen = anchorAction ? true : false;
     console.log(isCommentOpen);
 
-
     return (
       <React.Fragment>
         {weeks.map(week => (
           <div className={classes.comments}>
-          
             {week.posts.map(post => (
               <div className={classes.commentsBody}>
-                
                 <div className={classes.commentsBlock}>
                   <List
                     className={classNames(classes.commentList, {
@@ -233,15 +230,10 @@ class EvereoneComments extends Component {
                             This is an example of a comment related to the
                             previous question
                           </Typography>
-                          </div>
+                        </div>
                       </ListItem>
                     ))}
-                    <Collapse
-                      in={isCommentOpen}
-                      timeout="auto"
-                      unmountOnExit
-                      
-                    >
+                    <Collapse in={isCommentOpen} timeout="auto" unmountOnExit>
                       <ListItem className={classes.commentListItem}>
                         <div
                           className={classNames(
