@@ -3,16 +3,18 @@ import { withStyles } from "@material-ui/core/styles";
 import { Typography, Paper, List, ListItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import classNames from "classnames";
+import EvereoneComments from "./EvereoneComments";
 
 const styles = theme => ({
   listItem: {
-    border: "solid RGB(245, 245, 245)",
-    borderWidth: "2px 0 0",
+    border: "solid RGB(240, 240, 240)",
+    borderWidth: "0 0 1px",
     display: "flex",
     flexDirection: "column"
   },
-  "listItem:last-child": {
-    borderWidth: "2px 0"
+  listHeadItem: {
+    border: "solid RGB(210, 210, 210)",
+    borderWidth: "1px 0"
   },
   boldItem: {
     fontWeight: "600"
@@ -21,15 +23,19 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "stretch",
+    alignItems: "flex-start",
     minWidth: "min-content",
-    marginTop: "25px"
+    marginTop: "25px",
+    height: "100%",
+    minHeight: "100%"
   },
   leftBlock: {
     maxWidth: "calc(100% - 340px)",
-    flex: "1 1 calc(100% - 340px)",
+    flex: "calc(100% - 340px)",
     minWidth: "max-content",
-    marginLeft: "20px"
+    marginLeft: "20px",
+    padding: "20px",
+    alignSelf: "stretch"
   },
   rightBlock: {
     flex: "1 1 300px",
@@ -46,8 +52,8 @@ const styles = theme => ({
     justifyContent: "center"
   },
   personIcon: {
-    height: "50px",
-    width: "50px",
+    height: "55px",
+    width: "55px",
     backgroundColor: "RGB(200, 200, 200)",
     borderRadius: "50%",
     margin: "10px auto"
@@ -81,6 +87,30 @@ const styles = theme => ({
   submitedOnDate: {
     fontSize: "12px",
     width: "100%"
+  },
+  leftBlockHead: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingBottom: "20px"
+  },
+  nullMargin: {
+    margin: "0"
+  },
+  leftHeadName: {
+    marginLeft: "20px"
+  },
+  leftHeadSubmited: {
+    marginLeft: "auto",
+    display: "inline-block",
+    "& *": {
+      float: "left"
+    }
+  },
+  leftHeadDate: {
+    fontWeight: "600",
+    marginLeft: "5px"
   }
 });
 
@@ -120,30 +150,57 @@ class EvereoneCheckInsTab extends Component {
     return (
       <div className={classes.mainBlock}>
         <Paper className={classes.leftBlock}>
-          Everyone`s check-ins
-          <br />
-          sdfdsf
-          <br />
-          sdfsdfdsf
-          <br />
+          <div className={classes.leftBlockHead}>
+            <div
+              className={classNames(classes.personIcon, classes.nullMargin)}
+            />
+            <div className={classes.leftHeadName}>
+              <Typography
+                variant="h6"
+                className={classes.nullMargin}
+                gutterBottom
+              >
+                Ana Cecy Gallo
+              </Typography>
+              <Typography
+                variant="body2"
+                className={classes.nullMargin}
+                gutterBottom
+              >
+                UX Designer
+              </Typography>
+            </div>
+            <div className={classes.leftHeadSubmited}>
+              <Typography variant="body2" gutterBottom>
+                Submitted on
+              </Typography>
+              <Typography
+                className={classes.leftHeadDate}
+                variant="body2"
+                gutterBottom
+              >
+                Wednesday, April 3
+              </Typography>
+            </div>
+          </div>
+          <EvereoneComments />
         </Paper>
         <Paper className={classes.rightBlock}>
           <div className={classes.personInf}>
             <div className={classes.personIcon} />
             <Typography
               className={classes.personNameBlock}
-              component="h6"
-              variant="headline"
+              variant="h6"
               gutterBottom
             >
               Tomas Comelius
             </Typography>
             <Typography
               className={classes.personNameBlock}
-              variant="subheading"
+              variant="body2"
               gutterBottom
             >
-              Reviawer
+              Reviewer
             </Typography>
             <Button
               variant="contained"
@@ -154,7 +211,9 @@ class EvereoneCheckInsTab extends Component {
             </Button>
           </div>
           <List className={classes.listPersonBlock}>
-            <ListItem className={classNames(classes.boldItem)}>
+            <ListItem
+              className={classNames(classes.boldItem, classes.listHeadItem)}
+            >
               Anna Cecy`s Recent Check-Ins
             </ListItem>
             {dates.map(date => (
