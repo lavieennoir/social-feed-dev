@@ -1,18 +1,10 @@
-
 import React, { Component } from "react";
-import classNames from "classnames";
 import { withStyles, createStyles } from "@material-ui/core/styles";
 import SidebarStore from "../../stores/SidebarStore";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import TabContainer from "./TabContainer";
-import TeamCheckInsTab from "./TeamCheckInsTab";
-import Avatar from "./Avatar"
-import BlueForm from "../follow-ups/BlueForm"
-import NameList from "../follow-ups/FollowTabs";
-import GrayForm from "../follow-ups/AvatarName";
-import AvatarName from "../follow-ups/AvatarName";
-import FollowTabs from "../follow-ups/FollowTabs";
+import AvatarName from "./AvatarName";
+
 
 
 const styles = theme =>
@@ -83,22 +75,23 @@ const styles = theme =>
     },
     avatarEdit: {
       position: "absolute"
+    },
+    table: {
+      paddingBottom: "30px"
     }
   });
 
-class CheckIns extends Component {
+class FollowTabs extends Component {
   TabNavigationValues = {
-    MY_CHECK_INS: 0,
-    TEAM_CHECK_INS: 1,
-    EVERYONES: 2,
-    FOLLOW_UPS: 3
+    CURRENT_CHECK_INS: 0,
+    TEAM_HISTORY: 1
   };
 
   constructor(props) {
     super(props);
     this.state = {
       isSidebarOpen: SidebarStore.getState().isOpen,
-      activeTab: this.TabNavigationValues.FOLLOW_UPS
+      activeTab: this.TabNavigationValues.CURRENT_CHECK_INS
     };
   }
 
@@ -123,46 +116,34 @@ class CheckIns extends Component {
     const { activeTab } = this.state;
 
     return (
-      <div
-        className={classNames(classes.pageWrapper, {
-          [classes.drawerOpen]: this.state.isSidebarOpen,
-          [classes.drawerClose]: !this.state.isSidebarOpen
-        })}
-      >
+      <div className={classes.pageWrapper}>
         <Tabs
           className={classes.tabs}
           value={activeTab}
           onChange={this.handleTabChange}
           indicatorColor="primary"
           variant="fullWidth"
+          style={{ fullWidth: false, width: "50%" }}
         >
-          <Tab label="My check-ins" />
-          <Tab label="Team check-ins" />
-          <Tab label="Everyone`s check-ins" />
-          <Tab label="Follow-up`s" />
+          <Tab label="Open" />
+          <Tab label="Resolved" />
         </Tabs>
-        {activeTab === this.TabNavigationValues.MY_CHECK_INS && (
-          <TabContainer>
-          <Avatar />
-            <Avatar />
-          </TabContainer>
+        {activeTab === this.TabNavigationValues.CURRENT_CHECK_INS && (
+          <div className={classes.tabs + " " + classes.table}>
+            <AvatarName />
+            <AvatarName />
+          </div>
         )}
-        {activeTab === this.TabNavigationValues.TEAM_CHECK_INS && (
-          <TabContainer>
-            <TeamCheckInsTab />
-          </TabContainer>
+
+        {activeTab === this.TabNavigationValues.TEAM_HISTORY && (
+          <div className={classes.tabs + " " + classes.table}>
+           Resolved
+          </div>
         )}
-        {activeTab === this.TabNavigationValues.EVERYONES && (
-          <TabContainer>Everyone`s check-ins</TabContainer>
-        )}
-        {activeTab === this.TabNavigationValues.FOLLOW_UPS && (
-          <TabContainer>
-            <FollowTabs />
-          </TabContainer>
-        )}
+       
       </div>
     );
   }
 }
 
-export default withStyles(styles)(CheckIns);
+export default withStyles(styles)(FollowTabs);

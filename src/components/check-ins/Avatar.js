@@ -34,7 +34,6 @@ const styles = {
     padding: "30px"
   }
   
-  
 };
 
 function ImageAvatars(props) {
