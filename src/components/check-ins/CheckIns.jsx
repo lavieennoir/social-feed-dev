@@ -98,7 +98,7 @@ class CheckIns extends Component {
     super(props);
     this.state = {
       isSidebarOpen: SidebarStore.getState().isOpen,
-      activeTab: this.TabNavigationValues.FOLLOW_UPS
+      activeTab: this.TabNavigationValues.MY_CHECK_INS
     };
   }
 
@@ -144,7 +144,6 @@ class CheckIns extends Component {
         {activeTab === this.TabNavigationValues.MY_CHECK_INS && (
           <TabContainer>
           <Avatar />
-            <Avatar />
           </TabContainer>
         )}
         {activeTab === this.TabNavigationValues.TEAM_CHECK_INS && (
