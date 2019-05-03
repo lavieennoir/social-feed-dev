@@ -8,9 +8,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
 import classnames from "classnames";
 import IconButton from "@material-ui/core/IconButton";
-import ToggleQuestionAction, {
-  ToggleQuestionName
-} from "../../actions/ToggleQustionActions";
+import ToggleQuestionAction from "../../actions/ToggleQustionActions";
 
 const styles = theme =>
   createStyles({

@@ -136,11 +136,11 @@ class SideBar extends Component {
               <ListItemIcon>
                 <ViewQuilt />
               </ListItemIcon>
-              <ListItemText primary="manageQuestions" />
+              <ListItemText primary="checkIns" />
             </ListItem>
             <ListItem
               button
-              key="manageQuestions"
+              key="checkIns"
               onClick={() => NavigationActions.openCheckIns()}
             >
               <ListItemIcon>

@@ -7,16 +7,8 @@ import Tab from "@material-ui/core/Tab";
 import TabContainer from "./TabContainer";
 import TeamCheckInsTab from "./TeamCheckInsTab";
 import EvereoneCheckInsTab from "./EvereoneCheckInsTab";
-import { Paper } from "@material-ui/core";
-import { right } from "@material-ui/system/positions";
-import NavBar from "./NavBar";
-import Avatar from "./Avatar"
-import BlueForm from "../follow-ups/BlueForm"
-import NameList from "../follow-ups/FollowTabs";
-import GrayForm from "../follow-ups/AvatarName";
-import AvatarName from "../follow-ups/AvatarName";
+import Avatar from "./Avatar";
 import FollowTabs from "../follow-ups/FollowTabs";
-
 
 const styles = theme =>
   createStyles({
@@ -146,7 +138,7 @@ class CheckIns extends Component {
         </Tabs>
         {activeTab === this.TabNavigationValues.MY_CHECK_INS && (
           <TabContainer>
-          <Avatar />
+            <Avatar />
           </TabContainer>
         )}
         {activeTab === this.TabNavigationValues.TEAM_CHECK_INS && (
